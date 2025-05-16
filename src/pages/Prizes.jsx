@@ -1,417 +1,1000 @@
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import React, { useEffect, useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+         
 
-const Prizes = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
+
+
+
+
+
+// ===================================
+//            Code by Mohit Aggarwal
+// ===================================
+
+
+
+
+
+
+const VedicPrizeSection = () => {
+  const bgRef = useRef(null);
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    threshold: 0.2,
+    triggerOnce: false,
+  });
+
+  // Base color and accents
+  const baseColor = "#745b4f";
+  const accentColor = "#c0a062"; // Complementary gold
+  const textColor = "#f5f5dc"; // Cream text
+
+  // Dynamic background effect
+
+
 
   const prizes = [
     {
-      title: "Grand Prize - Golden Lotus",
-      description: "For the most innovative solution that beautifully integrates Vedic principles with modern technology",
-      rewards: [
-        "₹100,000 Cash Prize",
-        "Startup Incubation Opportunity",
-        "Mentorship from Industry Leaders",
-        "Exclusive Golden Lotus Trophy"
-      ],
-      iconClass: "grand"
+      id: 1,
+      rank: "1st",
+      title: "Brahma Ratna",
+      sanskrit: "ब्रह्म रत्न",
+      description: "The Supreme Creator's Jewel for exceptional excellence",
+      amount: "₹25,000",
+      perks: ["Gold Trophy", "ISRO Tech Tour", "1-Year Mentorship"],
+      icon: "🕉️",
+      size: "w-80 h-96",
     },
     {
-      title: "Silver Chakra Award",
-      description: "For the most technically impressive implementation",
-      rewards: [
-        "₹50,000 Cash Prize",
-        "6-Month Professional Development Program",
-        "Silver Chakra Trophy"
-      ],
-      iconClass: "silver"
+      id: 2,
+      rank: "2nd",
+      title: "Vishnu Padma",
+      sanskrit: "विष्णु पद्म",
+      description: "The Preserver's Lotus for remarkable achievement",
+      amount: "₹10,000",
+      perks: ["Silver Trophy", "6-Month Course", "CTO Sessions"],
+      icon: "🪷",
+      size: "w-72 h-88",
     },
     {
-      title: "Bronze Mandala Award",
-      description: "For the most user-friendly and accessible solution",
-      rewards: [
-        "₹25,000 Cash Prize", 
-        "3-Month Mentorship Program", 
-        "Bronze Mandala Trophy"
-      ],
-      iconClass: "bronze"
+      id: 3,
+      rank: "3rd",
+      title: "Shankha Tejas",
+      sanskrit: "शंख तेजस्",
+      description: "The Conch of Brilliance for outstanding potential",
+      amount: "₹5,000",
+      perks: ["Bronze Trophy", "Workshops", "Dev Toolkit"],
+      icon: "🐚",
+      size: "w-72 h-88",
     },
     {
-      title: "Sustainable Innovation Award",
-      description: "For the solution with the most positive environmental impact",
-      rewards: [
-        "₹20,000 Cash Prize",
-        "Networking Opportunities with Sustainability Experts",
-        "Featured in Sustainability Tech Magazine"
-      ],
-      iconClass: "eco"
-    },
-    {
-      title: "Cultural Heritage Award",
-      description: "For the project that best preserves and promotes cultural heritage",
-      rewards: [
-        "₹20,000 Cash Prize",
-        "Opportunity to Present at Cultural Tech Symposium",
-        "Heritage Preservation Partnership"
-      ],
-      iconClass: "cultural"
-    },
-    {
-      title: "People's Choice Award",
-      description: "Voted by all attendees during the final presentation",
-      rewards: [
-        "₹15,000 Cash Prize",
-        "Community Recognition",
-        "Special Feature on CodeVeda Website"
-      ],
-      iconClass: "people"
+      id: 4,
+      rank: "Fresher",
+      title: "Agni Ketu",
+      sanskrit: "अग्नि केतु",
+      description: "The Banner of New Fire for promising beginners",
+      amount: "₹10,000",
+      perks: ["Certificate", "Starter Kit", "Mentorship"],
+      icon: "🔥",
+      size: "w-64 h-80",
     },
   ];
 
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        when: "beforeChildren",
+      },
+    },
+  };
+
+  const prizeVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10,
+      },
+    },
+  };
+
   return (
-    <PrizesContainer>
-      <motion.div 
-        className="bg-pattern"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.05 }}
-        transition={{ duration: 1 }}
-      />
-      
-      <motion.div 
-        className="heading-container"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <h1>Prizes & Awards</h1>
-        <p>Celebrating excellence in integrating Vedic wisdom with modern technology</p>
-      </motion.div>
-      
-      <PrizesGrid>
-        {prizes.map((prize, index) => (
-          <PrizeCard 
-            key={index}
-            as={motion.div}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 0.6, 
-              delay: index * 0.15,
-              ease: "easeOut" 
+    <section
+      ref={ref}
+      className="relative py-14 px-4 overflow-hidden min-h-screen"
+      style={{ backgroundColor: baseColor }}
+    >
+      {/* Yantra patterns */}
+      {[...Array(9)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute border-4 border-amber-800/10 rounded-full pointer-events-none"
+          style={{
+            width: `${i * 10 + 10}%`,
+            height: `${i * 10 + 10}%`,
+            top: "50%",
+            left: "50%",
+            transform: `translate(-50%, -50%) rotate(${i * 15}deg)`,
+            animation: `spin ${60 - i * 5}s linear infinite`,
+          }}
+        />
+      ))}
+
+      {/* Floating Sanskrit characters */}
+      {["ॐ", "ह्रीं", "श्रीं", "क्लीं"].map((char, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-amber-300 text-4xl pointer-events-none"
+          initial={{
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            rotate: Math.random() * 360,
+          }}
+          animate={{
+            y: [0, -100],
+            x: [0, Math.random() > 0.5 ? 20 : -20],
+            rotate: [0, 360],
+            opacity: [1],
+          }}
+          transition={{
+            duration: 30 + Math.random() * 30,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{
+            fontSize: `${Math.random() * 3 + 2}rem`,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100 + 100}%`,
+          }}
+        >
+          {char}
+        </motion.div>
+      ))}
+
+      {/* Overlay */}
+      <div className="absolute inset-0 z-1 bg-gradient-to-b from-black/10 to-black/30"></div>
+
+      <div className="max-w-7xl mx-auto relative z-10 text-center">
+        {/* Header with Revealing Animation */}
+        <motion.h2
+          className="text-3xl md:text-5xl font-bold mb-2 text-center overflow-hidden"
+          style={{
+            color: textColor,
+            fontFamily: "'Yatra One', cursive",
+          }}
+          initial={{ y: "100%" }}
+          animate={{ y: 0 }}
+          transition={{
+            duration: 1,
+            ease: "easeOut",
+          }}
+        >
+          Vedic Achievement Honors
+        </motion.h2>
+        <div className="flex items-center justify-center my-8">
+          <div
+            className="h-[2px] w-16 md:w-24"
+            style={{
+              background: `linear-gradient(to right, transparent, ${accentColor}, transparent)`,
             }}
-            whileHover={{ 
-              y: -10, 
-              boxShadow: "0 15px 30px rgba(0,0,0,0.3)",
-              transition: { duration: 0.3 }
+          ></div>
+          <motion.span
+            className="mx-4 md:mx-6 text-3xl md:text-4xl"
+            style={{ color: accentColor }}
+            animate={{
+              scale: [1, 1.2, 1.3],
+              rotate: [0, 5, -5, 0],
+            }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              repeatType: "reverse",
             }}
           >
-            <IconCircle className={prize.iconClass}>
-              <PrizeIcon className={prize.iconClass} />
-            </IconCircle>
-            <h2>{prize.title}</h2>
-            <p className="description">{prize.description}</p>
-            <RewardsList>
-              {prize.rewards.map((reward, rewardIndex) => (
-                <li key={rewardIndex}>{reward}</li>
-              ))}
-            </RewardsList>
-          </PrizeCard>
-        ))}
-      </PrizesGrid>
-      
-      <motion.div 
-        className="special-note"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
+            ॐ
+          </motion.span>
+          <div
+            className="h-[2px] w-16 md:w-24"
+            style={{
+              background: `linear-gradient(to right, transparent, ${accentColor}, transparent)`,
+            }}
+          ></div>
+        </div>
+        <motion.p
+          className="text-sm md:text-xl text-center"
+          style={{ color: textColor }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          Where ancient wisdom illuminates modern achievement
+        </motion.p>
+      </div>
+
+      {/* Prize Pyramid */}
+      <motion.div
+        className="relative min-h-[600px] flex flex-col items-center mt-8"
+        variants={containerVariants}
+        initial="hidden"
+        animate={controls}
       >
-        <h2>Additional Perks for All Participants</h2>
-        <PerksContainer>
-          <PerkItem>
-            <PerkIcon className="certificate" />
-            <div>
-              <h3>Certificate of Participation</h3>
-              <p>All participants will receive a certificate recognizing their contribution to the CodeVeda initiative.</p>
+        {/* Desktop layout - Only visible on md and up */}
+        <div className="hidden md:block w-full h-full">
+          {/* 1st Prize - Top Center */}
+          <motion.div
+            variants={prizeVariants}
+            className={`absolute top-0 left-[38%] transform -translate-x-1/2 ${prizes[0].size}  rounded-2xl p-6 md:p-8 border-l-4 shadow-2xl z-10 backdrop-blur-sm mt-8 md:mt-0`}
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              borderColor: accentColor,
+              color: textColor,
+            }}
+            whileHover={{ scale: 1.09 }}
+          >
+         <div
+  className="absolute -top-6 -left-12 w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-xl md:text-2xl shadow-2xl overflow-hidden"
+  style={{ 
+    backgroundColor: 'transparent',
+    boxShadow: `0 0 30px ${accentColor}80`,
+    border: `2px solid ${accentColor}`
+  }}
+>
+  {/* Cosmic background */}
+  <motion.div 
+    className="absolute inset-0 rounded-full"
+    style={{
+      background: `radial-gradient(circle at 30% 30%, ${accentColor}20, #000000)`,
+      scale: 1.5
+    }}
+    animate={{
+      rotate: 360,
+      background: [
+        `radial-gradient(circle at 30% 30%, ${accentColor}20, #000000)`,
+        `radial-gradient(circle at 70% 70%, ${accentColor}20, #000000)`,
+        `radial-gradient(circle at 30% 30%, ${accentColor}20, #000000)`
+      ]
+    }}
+    transition={{
+      duration: 10,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  />
+  
+  {/* Rotating Sanskrit Yantra */}
+  <motion.div
+    className="absolute opacity-40"
+    animate={{ rotate: -360 }}
+    transition={{
+      duration: 10,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  >
+    <svg width="80" height="80" viewBox="0 0 100 100">
+      <path 
+        d="M20,50 Q50,20 80,50 Q50,80 20,50 Z" 
+        fill="none" 
+        stroke={accentColor} 
+        strokeWidth="1"
+      />
+      <text 
+        x="50" y="52" 
+        textAnchor="middle" 
+        fontSize="12" 
+        fill={accentColor}
+        fontFamily="sans-serif"
+      >
+        {Array(8).fill('ॐ').join(' ')}
+      </text>
+    </svg>
+  </motion.div>
+  
+  {/* Main Rank Text - Pulsing with Divine Energy */}
+  <motion.div
+    className="relative z-10"
+  >
+    {prizes[0].rank}
+  </motion.div>
+  
+  {/* Particle Constellation */}
+  {[...Array(12)].map((_, i) => {
+    const angle = (i * 30) * (Math.PI / 180);
+    const radius = 30;
+    return (
+      <motion.div
+        key={i}
+        className="absolute rounded-full"
+        style={{
+          backgroundColor: accentColor,
+          width: i % 3 === 0 ? '4px' : '2px',
+          height: i % 3 === 0 ? '4px' : '2px',
+          x: Math.cos(angle) * radius,
+          y: Math.sin(angle) * radius
+        }}
+        animate={{
+          scale: [1, 1.5, 1],
+          opacity: [0.3, 1, 0.3],
+          backgroundColor: [accentColor, textColor, accentColor]
+        }}
+        transition={{
+          duration: 3 + Math.random(),
+          delay: i * 0.2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    )
+  })}
+  
+  {/* Divine Light Rays */}
+  <motion.div 
+    className="absolute inset-0 rounded-full overflow-hidden"
+    initial={{ rotate: 0 }}
+    animate={{ rotate: 360 }}
+    transition={{
+      duration: 60,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  >
+    {[...Array(8)].map((_, i) => (
+      <div
+        key={i}
+        className="absolute top-0 left-1/2 w-1 h-10 origin-bottom"
+        style={{
+          backgroundColor: accentColor,
+          transform: `rotate(${i * 45}deg) translateX(-50%)`,
+          opacity: 0.3
+        }}
+      />
+    ))}
+  </motion.div>
+</div>
+
+          <div className="h-full flex flex-col">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h3
+                  className="text-xl md:text-3xl font-bold"
+                  style={{
+                    color: textColor,
+                    fontFamily: "'Yatra One', cursive",
+                  }}
+                >
+                  {prizes[0].title}
+                </h3>
+                <p className="text-xs md:text-sm italic opacity-80">
+                  {prizes[0].sanskrit}
+                </p>
+              </div>
+              <span className="text-3xl md:text-5xl" style={{ color: accentColor }}>
+                {prizes[0].icon}
+              </span>
             </div>
-          </PerkItem>
-          <PerkItem>
-            <PerkIcon className="swag" />
-            <div>
-              <h3>Exclusive Swag Kit</h3>
-              <p>Specially designed CodeVeda t-shirts, stickers, and eco-friendly merchandise.</p>
+            <p className="opacity-90 text-xs md:text-sm mb-4">
+              {prizes[0].description}
+            </p>
+            <div
+              className="text-2xl md:text-4xl font-bold my-4"
+              style={{ color: accentColor }}
+            >
+              {prizes[0].amount}
             </div>
-          </PerkItem>
-          <PerkItem>
-            <PerkIcon className="network" />
-            <div>
-              <h3>Networking Opportunities</h3>
-              <p>Connect with industry professionals, potential employers, and like-minded innovators.</p>
+            <ul className="mt-auto space-y-1 md:space-y-2">
+              {prizes[0].perks.map((perk, i) => (
+                <li key={i} className="flex items-center">
+                  <span className="mr-2" style={{ color: accentColor }}>
+                    ✦
+                  </span>
+                  <span className="opacity-90 text-xs md:text-sm">{perk}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+    </div>
+
+        {/* Mobile layout - Only visible below md */}
+        <div className="flex flex-col items-center w-full mt-8 gap-6 md:hidden">
+          {[0, 1, 2].map((idx) => (
+            <motion.div
+              key={prizes[idx].id}
+              variants={prizeVariants}
+              custom={idx}
+              className="rounded-2xl p-4 border-l-4 shadow-xl backdrop-blur-sm w-full max-w-xs relative"
+              style={{
+                backgroundColor:
+                  idx === 0
+                    ? "rgba(255, 255, 255, 0.05)"
+                    : idx === 1
+                    ? "rgba(255, 255, 255, 0.04)"
+                    : "rgba(255, 255, 255, 0.04)",
+                borderColor: idx === 0 ? accentColor : idx === 1 ? "#a8a8a8" : "#cd7f32",
+                color: textColor,
+              }}
+              whileHover={{ scale: 1.08 }}
+            >
+              {/* --- Place your animated .rank badge and prize content here --- */}
+              {/* Example: */}
+              {/* ...copy the corresponding <div className="absolute ..."> and content for each prize here... */}
+              {/* ...and the rest of the prize card content... */}
+              {/* For brevity, you can use your existing code for each prize's badge and content */}
+              {/* Example for 1st prize: */}
+              {idx === 0 && (
+                  <div
+  className="absolute -top-6 -left-[18px] w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-xl md:text-2xl shadow-2xl overflow-hidden"
+  style={{ 
+    backgroundColor: 'transparent',
+    boxShadow: `0 0 30px ${accentColor}80`,
+    border: `2px solid ${accentColor}`
+  }}
+>
+  {/* Cosmic background */}
+  <motion.div 
+    className="absolute inset-0 rounded-full"
+    style={{
+      background: `radial-gradient(circle at 30% 30%, ${accentColor}20, #000000)`,
+      scale: 1.5
+    }}
+    animate={{
+      rotate: 360,
+      background: [
+        `radial-gradient(circle at 30% 30%, ${accentColor}20, #000000)`,
+        `radial-gradient(circle at 70% 70%, ${accentColor}20, #000000)`,
+        `radial-gradient(circle at 30% 30%, ${accentColor}20, #000000)`
+      ]
+    }}
+    transition={{
+      duration: 10,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  />
+  
+  {/* Rotating Sanskrit Yantra */}
+  <motion.div
+    className="absolute opacity-40"
+    animate={{ rotate: -360 }}
+    transition={{
+      duration: 10,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  >
+    <svg width="80" height="80" viewBox="0 0 100 100">
+      <path 
+        d="M20,50 Q50,20 80,50 Q50,80 20,50 Z" 
+        fill="none" 
+        stroke={accentColor} 
+        strokeWidth="1"
+      />
+      <text 
+        x="50" y="52" 
+        textAnchor="middle" 
+        fontSize="12" 
+        fill={accentColor}
+        fontFamily="sans-serif"
+      >
+        {Array(8).fill('ॐ').join(' ')}
+      </text>
+    </svg>
+  </motion.div>
+  
+  {/* Main Rank Text - Pulsing with Divine Energy */}
+  <motion.div
+    className="relative z-10"
+  >
+    {prizes[0].rank}
+  </motion.div>
+  
+  {/* Particle Constellation */}
+  {[...Array(12)].map((_, i) => {
+    const angle = (i * 30) * (Math.PI / 180);
+    const radius = 30;
+    return (
+      <motion.div
+        key={i}
+        className="absolute rounded-full"
+        style={{
+          backgroundColor: accentColor,
+          width: i % 3 === 0 ? '4px' : '2px',
+          height: i % 3 === 0 ? '4px' : '2px',
+          x: Math.cos(angle) * radius,
+          y: Math.sin(angle) * radius
+        }}
+        animate={{
+          scale: [1, 1.5, 1],
+          opacity: [0.3, 1, 0.3],
+          backgroundColor: [accentColor, textColor, accentColor]
+        }}
+        transition={{
+          duration: 3 + Math.random(),
+          delay: i * 0.2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    )
+  })}
+  
+  {/* Divine Light Rays */}
+  <motion.div 
+    className="absolute inset-0 rounded-full overflow-hidden"
+    initial={{ rotate: 0 }}
+    animate={{ rotate: 360 }}
+    transition={{
+      duration: 60,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  >
+    {[...Array(8)].map((_, i) => (
+      <div
+        key={i}
+        className="absolute top-0 left-1/2 w-1 h-10 origin-bottom"
+        style={{
+          backgroundColor: accentColor,
+          transform: `rotate(${i * 45}deg) translateX(-50%)`,
+          opacity: 0.3
+        }}
+      />
+    ))}
+  </motion.div>
+</div>
+              )}
+              {idx === 1 && (
+                <div
+                  className="absolute -top-5 -left-5 w-14 h-14 flex items-center justify-center rounded-full text-white font-bold text-lg shadow-xl overflow-hidden"
+                  style={{ 
+                    backgroundColor: '#a8a8a8',
+                    boxShadow: `0 0 20px #a8a8a880`
+                  }}
+                >
+                  {/* Rotating Chakra */}
+                  <motion.div
+                    className="absolute"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 15,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  >
+                    <svg width="60" height="60" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="40" fill="none" stroke="#ffffff80" strokeWidth="2" strokeDasharray="5,5" />
+                      {[...Array(8)].map((_, i) => (
+                        <rect 
+                          key={i}
+                          x="45" y="5" 
+                          width="10" height="10" 
+                          fill="#ffffff80"
+                          transform={`rotate(${i * 45} 50 50)`}
+                        />
+                      ))}
+                    </svg>
+                  </motion.div>
+                  <motion.div 
+                    className="relative z-10"
+                    animate={{
+                      scale: [1, 1.1, 1],
+                      textShadow: ['0 0 3px #fff', '0 0 8px #fff', '0 0 3px #fff']
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity
+                    }}
+                  >
+                    {prizes[1].rank}
+                  </motion.div>
+                </div>
+              )}
+              {idx === 2 && (
+                <div
+                  className="absolute -top-5 -left-5 w-14 h-14 flex items-center justify-center rounded-full text-white font-bold text-lg shadow-lg overflow-hidden"
+                  style={{ 
+                    background: `linear-gradient(135deg, #cd7f32, #a05a2c)`,
+                    boxShadow: `0 0 15px #cd7f3280`
+                  }}
+                >
+                  <motion.div
+                    className="absolute inset-0 rounded-full"
+                    animate={{
+                      background: [
+                        `radial-gradient(circle at center, #cd7f32, #a05a2c)`,
+                        `radial-gradient(circle at center, #ff9e4d, #cd7f32)`,
+                        `radial-gradient(circle at center, #cd7f32, #a05a2c)`
+                      ]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity
+                    }}
+                  />
+                  <motion.div 
+                    className="relative z-10"
+                    animate={{
+                      y: [0, -2, 0],
+                      scale: [1, 1.05, 1]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity
+                    }}
+                  >
+                    {prizes[2].rank}
+                  </motion.div>
+                </div>
+              )}
+              {/* --- Prize content --- */}
+              <div className="h-full flex flex-col mt-8">
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h3
+                      className="text-2xl font-bold"
+                      style={{
+                        color: textColor,
+                        fontFamily: "'Yatra One', cursive",
+                      }}
+                    >
+                      {prizes[idx].title}
+                    </h3>
+                    <p className="text-xs italic opacity-80">{prizes[idx].sanskrit}</p>
+                  </div>
+                  <span className="text-4xl" style={{ color: accentColor }}>
+                    {prizes[idx].icon}
+                  </span>
+                </div>
+                <p className="opacity-90 text-sm mb-3">{prizes[idx].description}</p>
+                <div
+                  className="text-3xl font-bold my-3"
+                  style={{ color: accentColor }}
+                >
+                  {prizes[idx].amount}
+                </div>
+                <ul className="mt-auto space-y-1.5">
+                  {prizes[idx].perks.map((perk, i) => (
+                    <li key={i} className="flex items-center">
+                      <span className="mr-2" style={{ color: accentColor }}>
+                        ✦
+                      </span>
+                      <span className="opacity-90 text-sm">{perk}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Desktop layout - Original positioning */}
+        <div className="hidden md:block">
+          {/* 2nd Prize - Left */}
+          <motion.div
+            variants={prizeVariants}
+            custom={1}
+            className={`absolute top-[300px] left-[12%] transform -translate-x-1/2 ${prizes[1].size} rounded-2xl p-4 md:p-6 border-l-4 shadow-xl backdrop-blur-sm z-5`}
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.04)",
+              borderColor: "#a8a8a8", // Silver
+              color: textColor,
+            }}
+            whileHover={{ scale: 1.08 }}
+          >
+           <div
+  className="absolute -top-5 -left-5 w-14 h-14 md:w-18 md:h-18 flex items-center justify-center rounded-full text-white font-bold text-lg md:text-xl shadow-xl overflow-hidden"
+  style={{ 
+    backgroundColor: '#a8a8a8',
+    boxShadow: `0 0 20px #a8a8a880`
+  }}
+>
+  {/* Rotating Sudarshan Chakra */}
+  <motion.div
+    className="absolute"
+    animate={{ rotate: 360 }}
+    transition={{
+      duration: 15,
+      repeat: Infinity,
+      ease: "linear"
+    }}
+  >
+    <svg width="70" height="70" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" fill="none" stroke="#ffffff80" strokeWidth="2" strokeDasharray="5,5" />
+      {[...Array(12)].map((_, i) => (
+        <rect 
+          key={i}
+          x="45" y="5" 
+          width="10" height="10" 
+          fill="#ffffff80"
+          transform={`rotate(${i * 30} 50 50)`}
+        />
+      ))}
+    </svg>
+  </motion.div>
+  
+  {/* Main Rank Text */}
+  <motion.div
+    className="relative z-10"
+    initial={{ scale: 0 }}
+    animate={{ 
+      scale: [1, 1.05, 1],
+      textShadow: [
+        `0 0 3px #fff`,
+        `0 0 10px #fff`,
+        `0 0 3px #fff`
+      ]
+    }}
+    transition={{
+      duration: 4,
+      repeat: Infinity
+    }}
+  >
+    {prizes[1].rank}
+  </motion.div>
+  
+  {/* Floating Lotus Petals */}
+  {[...Array(6)].map((_, i) => (
+    <motion.div
+      key={i}
+      className="absolute text-xs"
+      style={{
+        color: '#ffffff80',
+        rotate: i * 60
+      }}
+      animate={{
+        y: [0, -5, 0],
+        opacity: [0.5, 1, 0.5]
+      }}
+      transition={{
+        duration: 3 + i,
+        delay: i * 0.3,
+        repeat: Infinity
+      }}
+    >
+      🪷
+    </motion.div>
+  ))}
+</div>
+            <div className="h-full flex flex-col">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3
+                    className="text-2xl font-bold"
+                    style={{
+                      color: textColor,
+                      fontFamily: "'Yatra One', cursive",
+                    }}
+                  >
+                    {prizes[1].title}
+                  </h3>
+                  <p className="text-xs italic opacity-80">
+                    {prizes[1].sanskrit}
+                  </p>
+                </div>
+                <span className="text-4xl" style={{ color: accentColor }}>
+                  {prizes[1].icon}
+                </span>
+              </div>
+              <p className="opacity-90 text-sm mb-3">{prizes[1].description}</p>
+              <div
+                className="text-3xl font-bold my-3"
+                style={{ color: accentColor }}
+              >
+                {prizes[1].amount}
+              </div>
+              <ul className="mt-auto space-y-1.5">
+                {prizes[1].perks.map((perk, i) => (
+                  <li key={i} className="flex items-center">
+                    <span className="mr-2" style={{ color: accentColor }}>
+                      ✦
+                    </span>
+                    <span className="opacity-90 text-sm">{perk}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </PerkItem>
-          <PerkItem>
-            <PerkIcon className="learning" />
-            <div>
-              <h3>Learning Resources</h3>
-              <p>Access to exclusive workshops, learning materials on Vedic principles and modern technology.</p>
+          </motion.div>
+
+          {/* 3rd Prize - Right */}
+          <motion.div
+            variants={prizeVariants}
+            custom={2}
+            className={`absolute top-[300px] left-[67%] transform -translate-x-1/2 ${prizes[2].size} rounded-2xl p-4 md:p-6 border-l-4 shadow-xl backdrop-blur-sm z-5`}
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.04)",
+              borderColor: "#cd7f32", // Bronze
+              color: textColor,
+            }}
+            whileHover={{ scale: 1.08 }}
+          >
+            <div
+  className="absolute -top-5 -left-8 w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full text-white font-bold text-lg shadow-lg overflow-hidden"
+  style={{ 
+    background: `linear-gradient(135deg, #cd7f32, #a05a2c)`,
+    boxShadow: `0 0 15px #cd7f3280`
+  }}
+>
+  {/* Pulsing Core */}
+  <motion.div
+    className="absolute inset-0 rounded-full"
+    animate={{
+      scale: [1, 1.2, 1],
+      opacity: [0.8, 1, 0.8],
+      background: [
+        `radial-gradient(circle at center, #cd7f32, #a05a2c)`,
+        `radial-gradient(circle at center, #ff9e4d, #cd7f32)`,
+        `radial-gradient(circle at center, #cd7f32, #a05a2c)`
+      ]
+    }}
+    transition={{
+      duration: 3,
+      repeat: Infinity
+    }}
+  />
+  
+  {/* Trishula Symbol */}
+  <motion.div 
+    className="relative z-10 flex flex-col items-center"
+    animate={{
+      y: [0, -2, 0],
+      scale: [1, 1.05, 1]
+    }}
+    transition={{
+      duration: 3,
+      repeat: Infinity
+    }}
+  >
+    <div className="text-xl">🔱</div>
+    <div className="text-sm font-bold">{prizes[2].rank}</div>
+  </motion.div>
+  
+  {/* Fire Particles */}
+  {[...Array(8)].map((_, i) => (
+    <motion.div
+      key={i}
+      className="absolute text-xs"
+      style={{
+        color: ['#ff9e4d', '#ff4500', '#ffcc33'][Math.floor(Math.random() * 3)],
+        x: Math.cos((i * 45) * Math.PI/180) * 25,
+        y: Math.sin((i * 45) * Math.PI/180) * 25
+      }}
+      animate={{
+        y: [0, -10, 0],
+        opacity: [0, 1, 0],
+        scale: [0.5, 1.5, 0]
+      }}
+      transition={{
+        duration: 2 + Math.random() * 2,
+        delay: i * 0.2,
+        repeat: Infinity
+      }}
+    >
+      {['🔥', '✨', '⚡'][Math.floor(Math.random() * 3)]}
+    </motion.div>
+  ))}
+</div>
+            <div className="h-full flex flex-col">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3
+                    className="text-2xl font-bold"
+                    style={{
+                      color: textColor,
+                      fontFamily: "'Yatra One', cursive",
+                    }}
+                  >
+                    {prizes[2].title}
+                  </h3>
+                  <p className="text-xs italic opacity-80">
+                    {prizes[2].sanskrit}
+                  </p>
+                </div>
+                <span className="text-4xl" style={{ color: accentColor }}>
+                  {prizes[2].icon}
+                </span>
+              </div>
+              <p className="opacity-90 text-sm mb-3">{prizes[2].description}</p>
+              <div
+                className="text-3xl font-bold my-3"
+                style={{ color: accentColor }}
+              >
+                {prizes[2].amount}
+              </div>
+              <ul className="mt-auto space-y-1.5">
+                {prizes[2].perks.map((perk, i) => (
+                  <li key={i} className="flex items-center">
+                    <span className="mr-2" style={{ color: accentColor }}>
+                      ✦
+                    </span>
+                    <span className="opacity-90 text-sm">{perk}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </PerkItem>
-        </PerksContainer>
+          </motion.div>
+        </div>
+
+        {/* Animated connecting lines (desktop only) */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block">
+          {/* Line from 1st to 2nd */}
+          <motion.line
+            x1="50%"
+            y1="150"
+            x2="20%"
+            y2="350"
+            stroke={accentColor}
+            strokeOpacity="0.4"
+            strokeWidth="3"
+            strokeDasharray="6 4"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{
+              duration: 1.5, // Animation duration
+            }}
+          />
+
+          {/* Line from 1st to 3rd */}
+          <motion.line
+            x1="50%"
+            y1="150"
+            x2="80%"
+            y2="350"
+            stroke={accentColor}
+            strokeOpacity="0.4"
+            strokeWidth="3"
+            strokeDasharray="6 4"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{
+              duration: 1.5, // Animation duration
+            }}
+          />
+        </svg>
       </motion.div>
-    </PrizesContainer>
+
+      {/* Vedic Quote */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: inView ? 1 : 0 }}
+        transition={{ delay: 1.5 }}
+        className="text-center mt-20 pt-8 border-t max-w-2xl mx-auto"
+        style={{ borderColor: `${accentColor}30` }}
+      >
+        <p className="text-xl italic" style={{ color: textColor }}>
+          "Knowledge is the torch that illuminates the path to greatness"
+        </p>
+        <p className="mt-2" style={{ color: accentColor }}>
+          - Rig Veda
+        </p>
+      </motion.div>
+      
+    </section>
   );
 };
 
-const PrizesContainer = styled.div`
-  position: relative;
-  padding: 120px 2rem 80px;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-  color: #f0f0f0;
-  min-height: 100vh;
-  
-  .bg-pattern {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-  }
-  
-  .heading-container {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    margin-bottom: 4rem;
-    
-    h1 {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(120deg, #FF6B35, #f39c12);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    p {
-      font-size: 1.2rem;
-      color: #ccc;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-  }
-  
-  .special-note {
-    position: relative;
-    z-index: 1;
-    margin-top: 6rem;
-    text-align: center;
-    
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 2rem;
-      color: #FF6B35;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    padding: 100px 1rem 60px;
-    
-    .heading-container h1 {
-      font-size: 2.5rem;
-    }
-  }
-`;
+export default VedicPrizeSection;
 
-const PrizesGrid = styled.div`
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
 
-const PrizeCard = styled.div`
-  background: rgba(30, 30, 30, 0.7);
-  border-radius: 10px;
-  padding: 2.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border: 1px solid rgba(255, 107, 53, 0.2);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  
-  h2 {
-    font-size: 1.8rem;
-    margin: 1.5rem 0 1rem;
-    color: #FF6B35;
-  }
-  
-  .description {
-    font-size: 1rem;
-    color: #ccc;
-    margin-bottom: 1.5rem;
-    flex-grow: 1;
-  }
-  
-  &:hover {
-    border-color: rgba(255, 107, 53, 0.5);
-  }
-`;
 
-const IconCircle = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 107, 53, 0.15);
-  
-  &.grand {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-  }
-  
-  &.silver {
-    background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
-  }
-  
-  &.bronze {
-    background: linear-gradient(135deg, #CD7F32, #8B4513);
-  }
-  
-  &.eco {
-    background: linear-gradient(135deg, #4CAF50, #2E7D32);
-  }
-  
-  &.cultural {
-    background: linear-gradient(135deg, #9C27B0, #6A1B9A);
-  }
-  
-  &.people {
-    background: linear-gradient(135deg, #2196F3, #0D47A1);
-  }
-`;
 
-const PrizeIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  
-  &.grand {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 1L9 9H2L7 14L5 22L12 17L19 22L17 14L22 9H15L12 1Z'/%3E%3C/svg%3E");
-  }
-  
-  &.silver {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 1L9 9H2L7 14L5 22L12 17L19 22L17 14L22 9H15L12 1Z'/%3E%3C/svg%3E");
-  }
-  
-  &.bronze {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 1L9 9H2L7 14L5 22L12 17L19 22L17 14L22 9H15L12 1Z'/%3E%3C/svg%3E");
-  }
-  
-  &.eco {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16 8 8 0 000 16zM11 7h2v6h-2V7zm0 8h2v2h-2v-2z'/%3E%3C/svg%3E");
-  }
-  
-  &.cultural {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
-  }
-  
-  &.people {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z'/%3E%3C/svg%3E");
-  }
-`;
 
-const RewardsList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  
-  li {
-    padding: 0.8rem 0;
-    border-top: 1px dashed rgba(255, 255, 255, 0.1);
-    font-size: 0.95rem;
-    color: #ddd;
-    
-    &:first-child {
-      font-weight: bold;
-      color: #FF6B35;
-    }
-  }
-`;
 
-const PerksContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
 
-const PerkItem = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: rgba(30, 30, 30, 0.7);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 107, 53, 0.2);
-  transition: all 0.3s ease;
-  
-  h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: #FF6B35;
-  }
-  
-  p {
-    color: #ccc;
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-  
-  &:hover {
-    border-color: rgba(255, 107, 53, 0.5);
-    transform: translateY(-5px);
-  }
-`;
 
-const PerkIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  
-  &.certificate {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF6B35' d='M14,2L20,8V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2H14M18,20V9H13V4H6V20H18M11,13H15V16H11V13M11,9H15V12H11V9M7,13H10V16H7V13M7,9H10V12H7V9Z'/%3E%3C/svg%3E");
-  }
-  
-  &.swag {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF6B35' d='M22.47,5.2C22,4.96 21.51,4.76 21,4.59v12.03C19.86,16.21 18.69,16 17.5,16c-1.9,0-3.78,0.54-5.5,1.58V5.48C10.38,4.55 8.51,4 6.5,4C4.71,4 3.02,4.44 1.53,5.2C1.2,5.36 1,5.71 1,6.08v12.08c0,0.58 0.47,0.99 1,0.99c0.16,0 0.32,-0.04 0.48,-0.12C3.69,18.4 5.05,18 6.5,18c2.07,0 3.98,0.82 5.5,2c1.52,-1.18 3.43,-2 5.5,-2c1.45,0 2.81,0.4 4.02,1.04c0.16,0.08 0.32,0.12 0.48,0.12c0.52,0 1,-0.41 1,-0.99V6.08c0,-0.37 -0.2,-0.72 -0.53,-0.88z'/%3E%3C/svg%3E");
-  }
-  
-  &.network {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF6B35' d='M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z'/%3E%3C/svg%3E");
-  }
-  
-  &.learning {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF6B35' d='M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z'/%3E%3C/svg%3E");
-  }
-`;
 
-export default Prizes;
+
+

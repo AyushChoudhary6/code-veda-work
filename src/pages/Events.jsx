@@ -1,490 +1,542 @@
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
-const Events = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
-  const events = [
+
+
+// ===================================
+//            Code by Mohit Aggarwal
+// ===================================
+
+
+const Event = () => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: false,
+  });
+
+  // Color scheme
+  const baseColor = "#745b4f";
+  const accentColor = "#c0a062";
+  const textColor = "#f5f5dc";
+
+  // 24-Hour Hackathon Timeline
+  const timeline = [
     {
-      title: "Opening Ceremony",
-      date: "August 15, 2025",
-      time: "10:00 AM - 11:30 AM",
-      venue: "Main Auditorium",
-      description: "Join us for the grand opening ceremony of CodeVeda 2025, featuring keynote speeches from industry leaders, traditional vedic chanting, and an overview of the exciting hackathon ahead.",
-      image: "/assets/images/events/opening.jpg",
-      highlights: [
-        "Inaugural lamp lighting ceremony",
-        "Keynote by Dr. Ramesh Sharma, CTO of TechVeda",
-        "Traditional Vedic chanting and blessings",
-        "Overview of hackathon themes and challenges"
-      ]
+      time: "08:00",
+      title: "Registration & Breakfast",
+      icon: "☕",
+      phase: "Preparation",
     },
+    { time: "09:00", title: "Opening Ceremony", icon: "🕉️", phase: "Kickoff" },
+    { time: "09:30", title: "Team Formation", icon: "👥", phase: "Teamwork" },
+    { time: "10:00", title: "Hackathon Begins!", icon: "💻", phase: "Coding" },
     {
-      title: "Vedic Mathematics Workshop",
-      date: "August 15, 2025",
-      time: "1:00 PM - 3:00 PM",
-      venue: "Workshop Hall A",
-      description: "Learn how ancient Vedic mathematical techniques can be applied to modern algorithm design and optimization problems. This hands-on workshop will demonstrate the surprising efficiency of these ancient methods.",
-      image: "/assets/images/events/math-workshop.jpg",
-      highlights: [
-        "Introduction to Vedic mathematical sutras",
-        "Algorithmic applications of Vedic mathematics",
-        "Optimization techniques from ancient texts",
-        "Hands-on problem-solving session"
-      ]
+      time: "06:00",
+      title: "Sunrise Meditation",
+      icon: "🌄",
+      phase: "Recharge",
     },
+    { time: "07:00", title: "Final Coding Push", icon: "⚡", phase: "Coding" },
     {
-      title: "Sustainable Coding Practices Panel",
-      date: "August 16, 2025",
-      time: "11:00 AM - 12:30 PM",
-      venue: "Panel Room B",
-      description: "Join our expert panel as they discuss how Vedic principles of sustainability can be applied to modern software development practices to create more efficient, ethical, and environmentally-friendly code.",
-      image: "/assets/images/events/sustainable-coding.jpg",
-      highlights: [
-        "Green coding principles and practices",
-        "Reducing digital carbon footprint",
-        "Ethical considerations in AI development",
-        "Q&A with sustainability experts"
-      ]
+      time: "08:00",
+      title: "Project Submission",
+      icon: "⏰",
+      phase: "Deadline",
     },
+    { time: "09:00", title: "Presentations", icon: "🎤", phase: "Showcase" },
     {
-      title: "Evening Yoga & Meditation",
-      date: "August 16, 2025",
-      time: "6:00 PM - 7:00 PM",
-      venue: "Meditation Garden",
-      description: "Take a rejuvenating break from coding with our guided yoga and meditation session. Learn techniques to improve focus, reduce stress, and enhance your creative problem-solving abilities.",
-      image: "/assets/images/events/yoga.jpg",
-      highlights: [
-        "Guided yoga asanas for programmers",
-        "Meditation techniques for improved focus",
-        "Pranayama breathing exercises",
-        "Mindfulness practices for better coding"
-      ]
+      time: "10:30",
+      title: "Judging & Deliberation",
+      icon: "🧑‍⚖️",
+      phase: "Evaluation",
     },
-    {
-      title: "Cultural Showcase",
-      date: "August 16, 2025",
-      time: "8:00 PM - 9:30 PM",
-      venue: "Main Auditorium",
-      description: "Experience the rich cultural heritage that inspires CodeVeda with performances of classical music, dance, and artistic expressions that bridge ancient wisdom with contemporary creativity.",
-      image: "/assets/images/events/cultural.jpg",
-      highlights: [
-        "Classical dance performances",
-        "Live Carnatic and Hindustani music",
-        "Spoken word poetry combining tech and tradition",
-        "Interactive art installations"
-      ]
-    },
-    {
-      title: "Closing Ceremony & Awards",
-      date: "August 17, 2025",
-      time: "5:00 PM - 7:00 PM",
-      venue: "Main Auditorium",
-      description: "Join us for the grand finale of CodeVeda 2025 as we celebrate the achievements of all participants, announce the winners, and reflect on the journey of merging ancient wisdom with modern technology.",
-      image: "/assets/images/events/closing.jpg",
-      highlights: [
-        "Project showcase from top teams",
-        "Awards presentation ceremony",
-        "Closing remarks by organizing committee",
-        "Networking reception"
-      ]
-    },
+    { time: "11:00", title: "Closing Ceremony", icon: "🏆", phase: "Awards" },
   ];
 
+  // Phase colors
+  const phaseColors = {
+    Preparation: "bg-blue-900/30",
+    Kickoff: "bg-purple-900/30",
+    Teamwork: "bg-indigo-900/30",
+    Coding: "bg-green-900/30",
+    Break: "bg-amber-900/30",
+    Guidance: "bg-teal-900/30",
+    Recharge: "bg-pink-900/30",
+    Energy: "bg-red-900/30",
+    Focus: "bg-gray-900/30",
+    Deadline: "bg-yellow-900/30",
+    Showcase: "bg-blue-900/30",
+    Evaluation: "bg-purple-900/30",
+    Awards: "bg-indigo-900/30",
+  };
+
+  // Floating elements state
+  const [floatingElements, setFloatingElements] = useState([]);
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+
+      // Create floating elements
+      const elements = [];
+      const elementTypes = ["🕉️", "💻", "🧘", "⚡", "🌙", "🌟", "📱", "🔮"];
+
+      for (let i = 0; i < 15; i++) {
+        elements.push({
+          id: i,
+          type: elementTypes[Math.floor(Math.random() * elementTypes.length)],
+          size: Math.random() * 20 + 10,
+          x: Math.random() * 100,
+          y: Math.random() * 100,
+          speed: Math.random() * 0.5 + 0.2,
+          delay: Math.random() * 5,
+        });
+      }
+
+      setFloatingElements(elements);
+    }
+  }, [controls, inView]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        when: "beforeChildren",
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10,
+      },
+    },
+  };
+
+  // Smoother snake path
+  const generateSnakePath = () => {
+    const points = [];
+    const segments = timeline.length;
+    const amplitude = 40;
+    const wavelength = 100;
+
+    for (let i = 0; i < segments; i++) {
+      const x = 50 + (i % 2 === 0 ? -amplitude : amplitude);
+      const y = i * wavelength - wavelength / 2;
+
+      if (i === 0) {
+        points.push(`M50,0 C50,20 ${x},40 50,60`);
+      } else {
+        points.push(`C${x},${y + 40} 50,${y + 60} 50,${y + 80}`);
+      }
+    }
+
+    return points.join(" ");
+  };
+
+  // Add this after your existing generateSnakePath function
+  const generateMobileSnakePath = () => {
+    return `M 20,0 ${Array(timeline.length)
+      .fill()
+      .map((_, i) => {
+        const y = i * 100;
+        return `L 20,${y}`;
+      })
+      .join(' ')}`;
+  };
+
+  // Floating element animation
+  const floatingVariants = {
+    float: {
+      y: ["0%", "-20%", "0%"],
+      x: ["0%", "5%", "0%"],
+      transition: {
+        duration: 8,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  // Add these new animation variants after your existing variants
+  const mobileTimelineVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: (i) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: i * 0.2,
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    })
+  };
+
+  const dotVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: (i) => ({
+      scale: [1, 1.2, 1],
+      opacity: 1,
+      transition: {
+        delay: i * 0.2,
+        duration: 0.5,
+        ease: "easeOut",
+      }
+    }),
+    pulse: {
+      scale: [1, 1.2, 1],
+      opacity: [1, 0.7, 1],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
-    <EventsContainer>      <motion.div 
-        className="mandala-decoration"
-        initial={{ opacity: 0, rotate: 0 }}
-        animate={{ opacity: 0.05, rotate: 360 }}
-        transition={{ opacity: { duration: 1 }, rotate: { duration: 120, repeat: Infinity, ease: "linear" } }}
-      />
-      
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="heading-container"
-      >
-        <div className="om-symbol">ॐ</div>
-        <h1 className="vedic-heading">Sacred Gatherings</h1>
-        <div className="sanskrit-divider">॥ कार्यक्रमाः ॥</div>
-        <p>Experience the divine convergence of ancient wisdom and modern innovation</p>
-      </motion.div>
-        <EventsList>
-        {events.map((event, index) => {
-          // Define Vedic symbols based on event type
-          let vedicSymbol = "॥"; // Default symbol
-          if (event.title.includes("Workshop")) vedicSymbol = "॰";
-          else if (event.title.includes("Panel")) vedicSymbol = "ꣾ";
-          else if (event.title.includes("Yoga") || event.title.includes("Meditation")) vedicSymbol = "ॐ";
-          else if (event.title.includes("Cultural")) vedicSymbol = "ऋ";
-          else if (event.title.includes("Closing")) vedicSymbol = "ꣳ";
-          
-          return (
-            <EventCard 
-              key={index}
-              as={motion.div}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-            >
-              <EventImagePlaceholder>
-                <span className="event-number">{index + 1}</span>
-                <span className="event-symbol">{vedicSymbol}</span>
-              </EventImagePlaceholder>
-              <EventContent>
-                <div className="event-header">
-                  <h2>{event.title}</h2>
-                  <EventMeta>
-                    <span className="date">{event.date}</span>
-                    <span className="time">{event.time}</span>
-                    <span className="venue">{event.venue}</span>
-                  </EventMeta>
-                </div>
-                <p className="description">{event.description}</p>
-                <EventHighlights>
-                  <h3>Highlights</h3>
-                  <ul>
-                    {event.highlights.map((highlight, i) => (
-                      <li key={i}>{highlight}</li>
-                    ))}
-                  </ul>
-                </EventHighlights>
-              </EventContent>
-            </EventCard>
-          );
-        })}
-      </EventsList>
-      
-      <ScheduleLink
-        as={motion.div}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-      >
-        <p>View our complete hackathon schedule to plan your CodeVeda experience</p>
-        <Link to="/schedule">
-          <motion.button 
-            whileHover={{ scale: 1.05 }} 
-            whileTap={{ scale: 0.95 }}
+    <div
+      ref={ref}
+      className="relative min-h-screen overflow-hidden"
+      style={{ backgroundColor: baseColor, color: textColor }}
+    >
+      {[...Array(9)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute border-2 border-amber-800/20 rounded-full pointer-events-none"
+          style={{
+            width: `${i * 10 + 10}%`,
+            height: `${i * 10 + 10}%`,
+            top: "50%",
+            left: "50%",
+            transform: `translate(-50%, -50%) rotate(${i * 15}deg)`,
+            animation: `spin ${60 - i * 5}s linear infinite`,
+          }}
+        />
+      ))}
+      {/* Floating elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {floatingElements.map((element) => (
+          <motion.div
+            key={element.id}
+            className="absolute"
+            style={{
+              left: `${element.x}%`,
+              top: `${element.y}%`,
+              fontSize: `${element.size}px`,
+              opacity: 0.3,
+            }}
+            variants={floatingVariants}
+            initial="float"
+            animate="float"
+            transition={{
+              duration: element.speed * 20,
+              delay: element.delay,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
           >
-            Complete Schedule
-          </motion.button>
-        </Link>
-      </ScheduleLink>
-    </EventsContainer>
+            {element.type}
+          </motion.div>
+        ))}
+
+        {/* Animated dots pattern */}
+        <div className="absolute inset-0">
+          {Array.from({ length: 50 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                backgroundColor: accentColor,
+                width: `${Math.random() * 4 + 1}px`,
+                height: `${Math.random() * 4 + 1}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                opacity: 0.1,
+              }}
+              animate={{
+                opacity: [0.1, 0.3, 0.1],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: Math.random() * 5 + 3,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: Math.random() * 5,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+
+
+
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Snake Timeline Section */}
+        <section className="py-10 md:py-20 px-4">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={controls}
+            className="max-w-6xl mx-auto"
+          >
+            <motion.h2
+              variants={itemVariants}
+              className="text-2xl md:text-4xl font-bold mb-4 md:mb-6 text-center"
+              style={{ color: accentColor, fontFamily: "'Yatra One', cursive" }}
+            >
+              24-Hour Hackathon Timeline
+            </motion.h2>
+
+
+
+
+
+
+
+            <div className="flex items-center justify-center my-8 md:my-2">
+          <div
+            className="h-[2px] w-16 md:w-24"
+            style={{
+              background: `linear-gradient(to right, transparent, ${accentColor}, transparent)`,
+            }}
+          ></div>
+          <motion.span
+            className="mx-4 md:mx-6 text-3xl md:text-4xl"
+            style={{ color: accentColor }}
+            animate={{
+              scale: [1, 1.2, 1.3],
+              rotate: [0, 5, -5, 0],
+            }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          >
+            ॐ
+          </motion.span>
+          <div
+            className="h-[2px] w-16 md:w-24"
+            style={{
+              background: `linear-gradient(to right, transparent, ${accentColor}, transparent)`,
+            }}
+          ></div>
+        </div>
+
+
+
+
+
+
+
+            {/* Desktop Timeline (Hidden on mobile) */}
+            <div className="hidden md:block relative">
+              <svg
+                className="absolute w-full h-full left-0 top-0 pointer-events-none"
+                viewBox="0 0 100 1000"
+                preserveAspectRatio="none"
+              >
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 4, ease: "easeInOut" }}
+                  d={generateSnakePath()}
+                  fill="none"
+                  stroke={accentColor}
+                  strokeWidth="1.5"
+                  strokeDasharray="5,3"
+                />
+              </svg>
+
+              {/* Existing desktop timeline layout */}
+              <div className="relative" style={{ height: `${timeline.length * 100}px` }}>
+                {timeline.map((item, i) => {
+                  const x = i % 2 === 0 ? "30%" : "70%";
+                  const y = `${i * 100}px`;
+
+                  return (
+                    <motion.div
+                      key={i}
+                      variants={itemVariants}
+                      custom={i}
+                      className={`absolute w-96 ${
+                        i % 2 === 0 ? "left-0" : "right-0"
+                      }`}
+                      style={{ top: y }}
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <div
+                        className={`p-6 rounded-lg border-l-4 backdrop-blur-sm ${
+                          phaseColors[item.phase]
+                        } mx-4`}
+                        style={{
+                          borderColor: accentColor,
+                          boxShadow: `0 4px 6px -1px ${accentColor}20`,
+                        }}
+                      >
+                        <div className="flex items-start">
+                          <div
+                            className="text-2xl mr-4"
+                            style={{ color: accentColor }}
+                          >
+                            {item.icon}
+                          </div>
+                          <div>
+                            <div className="flex items-center mb-1">
+                              <div
+                                className="font-mono font-bold mr-3"
+                                style={{ color: accentColor }}
+                              >
+                                {item.time}
+                              </div>
+                              <div className="text-xs px-2 py-1 rounded-full bg-black/20">
+                                {item.phase}
+                              </div>
+                            </div>
+                            <h3 className="text-xl font-bold">{item.title}</h3>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Mobile Timeline (Hidden on desktop) */}
+            <div className="md:hidden relative">
+              {/* Mobile Snake Path */}
+              <svg
+                className="absolute w-full h-full left-0 top-0 pointer-events-none"
+                style={{ height: `${timeline.length * 100}px` }}
+                preserveAspectRatio="none"
+              >
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 2, ease: "easeInOut" }}
+                  d={generateMobileSnakePath()}
+                  fill="none"
+                  stroke={accentColor}
+                  strokeWidth="2"
+                  strokeDasharray="5,3"
+                  strokeLinecap="round"
+                  strokeOpacity="0.6"
+                />
+              </svg>
+
+              {/* Timeline Items */}
+              <div className="space-y-4 relative">
+                {timeline.map((item, i) => (
+                  <motion.div
+                    key={i}
+                    variants={mobileTimelineVariants}
+                    custom={i}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover={{ scale: 1.02, x: 10 }}
+                    className="relative ml-8"
+                  >
+                    {/* Animated connection line */}
+                    {i < timeline.length - 1 && (
+                      <motion.div
+                        className="absolute h-full w-px left-[-24px] top-[28px]"
+                        initial={{ height: 0 }}
+                        animate={{ height: "calc(100% + 1rem)" }}
+                        transition={{ delay: i * 0.2, duration: 0.5 }}
+                        style={{
+                          background: `linear-gradient(to bottom, ${accentColor}50, transparent)`,
+                        }}
+                      />
+                    )}
+
+                    <motion.div
+                      className={`p-4 rounded-lg border-l-4 backdrop-blur-sm ${phaseColors[item.phase]}`}
+                      style={{
+                        borderColor: accentColor,
+                        boxShadow: `0 4px 6px -1px ${accentColor}20`,
+                      }}
+                      whileHover={{
+                        boxShadow: `0 8px 12px -1px ${accentColor}40`,
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {/* Content */}
+                      <div className="flex items-start">
+                        <motion.div
+                          className="text-xl mr-3"
+                          style={{ color: accentColor }}
+                          whileHover={{ scale: 1.2, rotate: [0, 5, -5, 0] }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {item.icon}
+                        </motion.div>
+                        <div className="flex-1">
+                          <motion.div
+                            className="flex items-center mb-1 flex-wrap gap-2"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.2 + 0.2 }}
+                          >
+                            <div
+                              className="font-mono font-bold text-sm"
+                              style={{ color: accentColor }}
+                            >
+                              {item.time}
+                            </div>
+                            <div className="text-xs px-2 py-0.5 rounded-full bg-black/20">
+                              {item.phase}
+                            </div>
+                          </motion.div>
+                          <motion.h3
+                            className="text-base font-bold"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: i * 0.2 + 0.3 }}
+                          >
+                            {item.title}
+                          </motion.h3>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Animated dot connector */}
+                    <motion.div
+                      variants={dotVariants}
+                      custom={i}
+                      initial="hidden"
+                      animate={["visible", "pulse"]}
+                      className="absolute w-3 h-3 rounded-full left-[-24px] top-6"
+                      style={{
+                        backgroundColor: accentColor,
+                        boxShadow: `0 0 10px ${accentColor}80`,
+                      }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </section>
+      </div>
+    </div>
   );
 };
 
-const EventsContainer = styled.div`
-  position: relative;
-  padding: 120px 2rem 80px;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-  color: #f0f0f0;
-  min-height: 100vh;
-  
-  .mandala-decoration {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80vw;
-    height: 80vw;
-    max-width: 1200px;
-    max-height: 1200px;
-    background-image: url('../assets/images/mandala-pattern.svg');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 0;
-  }
-  
-  .heading-container {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    margin-bottom: 4rem;
-    
-    .om-symbol {
-      font-family: var(--font-sanskrit);
-      font-size: 3rem;
-      color: var(--color-saffron);
-      margin-bottom: 1rem;
-    }
-    
-    h1 {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      margin-bottom: 0.5rem;
-      color: var(--color-saffron);
-    }
-    
-    .sanskrit-divider {
-      font-family: var(--font-sanskrit);
-      font-size: 1.5rem;
-      color: var(--color-gold);
-      margin-bottom: 1.5rem;
-    }
-    
-    p {
-      font-family: var(--font-alt);
-      font-size: 1.2rem;
-      color: #ccc;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    padding: 100px 1rem 60px;
-    
-    .heading-container h1 {
-      font-size: 2.5rem;
-    }
-  }
-`;
-
-const EventsList = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-`;
-
-const EventCard = styled.div`
-  display: flex;
-  background: rgba(30, 30, 30, 0.7);
-  border-radius: 10px;
-  margin-bottom: 2.5rem;
-  overflow: hidden;
-  border: 1px solid rgba(255, 107, 53, 0.2);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 107, 53, 0.5);
-  }
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const EventImagePlaceholder = styled.div`
-  width: 280px;
-  min-height: 280px;
-  background: linear-gradient(45deg, #FF6B35 0%, #f39c12 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  
-  &:before {
-    content: '';
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-image: url('../assets/images/mandala-pattern.svg');
-    background-size: contain;
-    background-position: center;
-    opacity: 0.08;
-    pointer-events: none;
-  }
-  
-  .event-number {
-    font-family: var(--font-display);
-    font-size: 3.5rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 0.5rem;
-  }
-  
-  .event-symbol {
-    font-family: var(--font-sanskrit);
-    font-size: 2.5rem;
-    color: rgba(255, 255, 255, 0.6);
-    display: block;
-  }
-  
-  @media (max-width: 768px) {
-    width: 100%;
-    height: 180px;
-    min-height: unset;
-    
-    .event-number {
-      font-size: 2.5rem;
-    }
-    
-    .event-symbol {
-      font-size: 1.8rem;
-    }
-  }
-`;
-
-const EventContent = styled.div`
-  flex: 1;
-  padding: 2rem;
-  
-  .event-header {
-    margin-bottom: 1.5rem;
-    
-    h2 {
-      font-size: 1.8rem;
-      color: #FF6B35;
-      margin-bottom: 0.5rem;
-    }
-  }
-  
-  .description {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #ddd;
-    margin-bottom: 1.5rem;
-  }
-  
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-    
-    .event-header h2 {
-      font-size: 1.5rem;
-    }
-  }
-`;
-
-const EventMeta = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  font-size: 0.9rem;
-  color: #aaa;
-  
-  span {
-    display: flex;
-    align-items: center;
-    
-    &:before {
-      content: '';
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: #FF6B35;
-      border-radius: 50%;
-      margin-right: 8px;
-    }
-  }
-`;
-
-const EventHighlights = styled.div`
-  h3 {
-    font-size: 1.2rem;
-    color: #ccc;
-    margin-bottom: 0.8rem;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-    
-    li {
-      position: relative;
-      padding-left: 1.5rem;
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-      color: #bbb;
-      
-      &:before {
-        content: "॥";
-        position: absolute;
-        left: 0;
-        color: #FF6B35;
-      }
-    }
-  }
-`;
-
-const ScheduleLink = styled.div`
-  text-align: center;
-  margin-top: 4rem;
-  position: relative;
-  padding: 2rem 0;
-  
-  .decorative-line {
-    height: 3px;
-    max-width: 300px;
-    margin: 0 auto 1.5rem;
-    background: linear-gradient(90deg, 
-      rgba(255,153,51,0) 0%, 
-      rgba(255,153,51,0.5) 50%, 
-      rgba(255,153,51,0) 100%
-    );
-    
-    &:last-of-type {
-      margin: 1.5rem auto 0;
-    }
-  }
-  
-  p {
-    font-family: var(--font-sanskrit);
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    color: var(--color-gold);
-  }
-  
-  button {
-    font-family: var(--font-primary);
-    background: linear-gradient(to right, #FF6B35, #f39c12);
-    color: #fff;
-    border: none;
-    padding: 12px 30px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
-    position: relative;
-    overflow: hidden;
-    
-    &:before {
-      content: '';
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      right: -10px;
-      bottom: -10px;
-      background: linear-gradient(45deg, #FF6B35, #f39c12, #FF6B35);
-      background-size: 200% 200%;
-      animation: shimmer 2s infinite linear;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: -1;
-    }
-    
-    &:hover {
-      box-shadow: 0 6px 15px rgba(255, 107, 53, 0.5);
-      transform: translateY(-2px);
-      
-      &:before {
-        opacity: 0.3;
-      }
-    }
-  }
-  
-  @keyframes shimmer {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 200% 200%; }
-  }
-`;
-
-export default Events;
+export default Event;
