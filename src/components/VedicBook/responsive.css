@@ -1,0 +1,82 @@
+/* Responsive styles for VedicBook */
+@media (max-width: 992px) {
+  .book-container {
+    margin: 3rem 0;
+  }
+
+  .PageContent {
+    padding: 3rem;
+  }
+
+  .PageWrapper {
+    min-height: 500px;
+  }
+
+  .Button {
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .book-container {
+    margin: 2rem 0;
+  }
+
+  .PageContent {
+    padding: 2rem;
+  }
+
+  .PageContent h1 {
+    font-size: 2.2rem;
+  }
+
+  .PageContent h2 {
+    font-size: 1.8rem;
+  }
+
+  .PageWrapper {
+    min-height: 450px;
+  }
+
+  .Button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .PageCounter {
+    padding: 0.4rem 1.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .PageContent {
+    padding: 1.5rem;
+  }
+
+  .PageContent h1 {
+    font-size: 2rem;
+  }
+
+  .PageContent h2 {
+    font-size: 1.6rem;
+    margin-top: 1rem;
+  }
+
+  .PageContent p {
+    font-size: 1rem;
+  }
+
+  .PageWrapper {
+    min-height: 400px;
+  }
+
+  .Button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .BookControls {
+    margin-top: 1.5rem;
+  }
+}
