@@ -1,0 +1,78 @@
+[
+    {
+      "tier": "Brahma Tier",
+      "color": "#FFC738",
+      "description": "Our principal sponsors who make the entire CodeVeda hackathon possible.",
+      "sponsors": [
+        {
+          "name": "TechVeda Solutions",
+          "logo": "/tv.jpeg",
+          "description": "Leading AI and machine learning solutions for modern businesses.",
+          "website": "https://techveda-example.com"
+        },
+        {
+          "name": "Sanskrit AI",
+          "logo": "",
+          "description": "Pioneering language technology based on ancient Sanskrit principles.",
+          "website": "https://sanskritai-example.com"
+        }
+      ]
+    },
+    {
+      "tier": "Vishnu Tier",
+      "color": "#E0E0E0",
+      "description": "Major supporters who help sustain our innovation ecosystem.",
+      "sponsors": [
+        {
+          "name": "Dharma Tech",
+          "logo": "",
+          "description": "Ethical technology solutions for conscious businesses.",
+          "website": "https://dharmatech-example.com"
+        },
+        {
+          "name": "Chakra Labs",
+          "logo": "",
+          "description": "Research-focused development of balanced technologies.",
+          "website": "https://chakralabs-example.com"
+        },
+        {
+          "name": "Om Systems",
+          "logo": "",
+          "description": "Universal technology solutions with Vedic principles.",
+          "website": "https://omsystems-example.com"
+        }
+      ]
+    },
+    {
+      "tier": "Shiva Tier",
+      "color": "#CD7F32",
+      "description": "Valued supporters providing essential resources and expertise.",
+      "sponsors": [
+        {
+          "name": "Mantra Cloud",
+          "logo": "",
+          "description": "Cloud solutions with meaning and purpose.",
+          "website": "https://mantracloud-example.com"
+        },
+        {
+          "name": "Ashram Technologies",
+          "logo": "",
+          "description": "Sustainable and mindful technology innovation.",
+          "website": "https://ashramtech-example.com"
+        },
+        {
+          "name": "Kali Security",
+          "logo": "",
+          "description": "Protection through ancient wisdom and modern techniques.",
+          "website": "https://kalisecurity-example.com"
+        },
+        {
+          "name": "Ganesha Analytics",
+          "logo": "",
+          "description": "Removing obstacles to data insights and intelligence.",
+          "website": "https://ganeshaanalytics-example.com"
+        }
+      ]
+    }
+  ]
+  

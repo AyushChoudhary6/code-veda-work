@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { RiGithubLine } from "react-icons/ri";
+import { FaLinkedinIn } from "react-icons/fa";
 
 const Team = () => {
   useEffect(() => {
@@ -11,267 +9,113 @@ const Team = () => {
   
   const teamMembers = [
     {
-      name: 'Arjun Sharma',
-      role: 'Lead Organizer',
-      image: '/src/assets/images/team/arjun.jpg',
-      bio: 'Passionate about bringing ancient wisdom into modern technology.',
+      name: 'Shivansh Baliyan',
+      role: ' Karya Sutradhār (Master of Event Orchestration)',
+      image: 'sb.jpg',
+      bio: 'The guiding thread behind the entire event, overseeing timelines, planning rituals (schedules), and ensuring divine order (logistics).',
       social: {
-        linkedin: 'https://linkedin.com/in/arjunsharma',
+        linkedin: 'https://www.linkedin.com/in/shivansh-baliyan/',
         github: 'https://github.com/arjunsharma'
       }
     },
     {
-      name: 'Priya Patel',
-      role: 'Technical Lead',
-      image: '/src/assets/images/team/priya.jpg',
-      bio: 'Full-stack developer with expertise in React and Node.js.',
+      name: 'Shaurya Pratap Singh',
+      role: 'Chitrakaār (The Visual Artisan)',
+      image: '/sp.jpeg',
+      bio: 'Crafts the visual aura of Code Veda through compelling posters, designs, and aesthetic storytelling rooted in creative dharma..',
       social: {
-        linkedin: 'https://linkedin.com/in/priyapatel',
+        linkedin: 'https://www.linkedin.com/in/shaurya-pratap-singh-7425822a8/',
         github: 'https://github.com/priyapatel'
       }
     },
     {
-      name: 'Rahul Mehta',
-      role: 'Design Lead',
-      image: '/src/assets/images/team/rahul.jpg',
-      bio: 'UX designer focused on creating meaningful digital experiences.',
+      name: 'Sampreeti Rastogi',
+      role: ' Sambandh Vidhāyak (Architect of Alliances)',
+      image: '/sm.jpeg',
+      bio: 'Builds and nurtures ties with sponsors, media houses, and external patrons — channeling support and blessings for the hackathon.',
       social: {
-        linkedin: 'https://linkedin.com/in/rahulmehta',
+        linkedin: 'https://www.linkedin.com/in/sampreeti-rastogi-868612325/',
         github: 'https://github.com/rahulmehta'
       }
     },
     {
-      name: 'Anjali Desai',
-      role: 'Content Strategist',
-      image: '/src/assets/images/team/anjali.jpg',
-      bio: 'Sanskrit scholar and technology enthusiast.',
+      name: 'Nikhil Sood',
+      role: 'Vaarta Doot (Messenger of the Digital Realm)',
+      image: '/ns.jpeg',
+      bio: 'Spreads the word across the digital skies — managing social media, promotions, and keeping the online Agni alive.',
       social: {
-        linkedin: 'https://linkedin.com/in/anjalidesai',
-        github: 'https://github.com/anjalidesai'
-      }
-    },
-    {
-      name: 'Vikram Singh',
-      role: 'Outreach Coordinator',
-      image: '/src/assets/images/team/vikram.jpg',
-      bio: 'Connecting ancient wisdom with modern communities.',
-      social: {
-        linkedin: 'https://linkedin.com/in/vikramsingh',
+        linkedin: 'https://www.linkedin.com/in/nikhils00d/',
         github: 'https://github.com/vikramsingh'
       }
     },
     {
-      name: 'Meera Gupta',
-      role: 'Community Manager',
-      image: '/src/assets/images/team/meera.jpg',
-      bio: 'Building bridges between technology and cultural heritage.',
+      name: 'Sumit Thakur',
+      role: 'Yajna Karta (Executor of the Sacred Ritual)',
+      image: '/st.jpeg',
+      bio: 'The one who brings the vision to life — ensuring smooth execution, team alignment, and sanctity of every operational task.',
       social: {
-        linkedin: 'https://linkedin.com/in/meeragupta',
+        linkedin: 'https://www.linkedin.com/in/sumit-thakur-80ba72278/',
         github: 'https://github.com/meeragupta'
       }
     }
   ];
 
   return (
-    <TeamContainer>
-      <TeamHero
-        as={motion.div}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <h1>Our Team</h1>
-        <p>Meet the passionate minds behind CodeVeda</p>
-      </TeamHero>
-      
-      <TeamGrid
-        as={motion.div}
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
-        {teamMembers.map((member, index) => (
-          <TeamCard 
-            key={index}
-            as={motion.div}
-            whileHover={{ 
-              scale: 1.03, 
-              boxShadow: '0 10px 20px rgba(0,0,0,0.2)' 
-            }}
-            transition={{ duration: 0.3 }}
-          >
-            <MemberImage>
-              <img src={member.image} alt={member.name} />
-            </MemberImage>
-            <MemberInfo>
-              <h3>{member.name}</h3>
-              <h4>{member.role}</h4>
-              <p>{member.bio}</p>              <SocialLinks>
-                <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer">
-                  <FontAwesomeIcon icon={faLinkedin} />
-                </a>
-                <a href={member.social.github} target="_blank" rel="noopener noreferrer">
-                  <FontAwesomeIcon icon={faGithub} />
-                </a>
-              </SocialLinks>
-            </MemberInfo>
-          </TeamCard>
-        ))}
-      </TeamGrid>
-      
-      <TeamFooter>
-        <h2>Want to Collaborate?</h2>
-        <p>We're always looking for passionate individuals to join our mission of bridging ancient wisdom with modern technology.</p>
-        <ContactButton 
-          as={motion.button}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Contact Us
-        </ContactButton>
-      </TeamFooter>
-    </TeamContainer>
-  );
-};
+    <>
+    <div className='h-auto w-screen bg-[url(/om.png)] bg-repeat bg-blend-soft-light bg-contain text-5xl vedic-title bg-[#3b2e1e]  text-center !text-[#f3e9c6] mb-6'>
+    <h1 className='text-center pt-7 text-5xl vedic-title !text-[#f3e9c6]'>Our Team</h1>
 
-const TeamContainer = styled.section`
-  padding: 120px 0 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-  
-  @media (max-width: 1240px) {
-    padding: 120px 20px 80px;
-  }
-`;
+    <h1 className='text-center p-6 text-3xl vedic-title !text-[#f3e9c6]'>🔱 Code Veda Hackathon – The Council of Leads 🔱
+    Infusing ancient wisdom with modern innovation</h1>
+    </div>
 
-const TeamHero = styled.div`
-  text-align: center;
-  margin-bottom: 60px;
-  
-  h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(120deg, #FF6B35, #f39c12);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  p {
-    font-size: 1.2rem;
-    color: #ccc;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-`;
+    <div className='w-full h-auto p-8 flex flex-wrap gap-12 items-center justify-center'>
 
-const TeamGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 30px;
-  margin-bottom: 80px;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  }
-`;
+{teamMembers.map((member, index) => (
+  <div key={index} className='flex flex-col h-auto items-center p-4 shadow-md rounded-md transition duration-300 hover:shadow-[0_0_25px_rgba(59,46,30,0.6)] scroll-animate'>
 
-const TeamCard = styled.div`
-  background: rgba(30, 30, 30, 0.6);
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 107, 53, 0.2);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-`;
+    {/* Profile container */}
+    <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-[25rem] md:h-[25rem] lg:w-[29rem] lg:h-[29rem] scroll-animate">
+  {/* Spinning border layer */}
+  <div className=" absolute inset-0 rounded-full bg-[url(/border.png)] bg-cover bg-center animate-spin-slow"></div>
 
-const MemberImage = styled.div`
-  height: 250px;
-  overflow: hidden;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-  
-  &:hover img {
-    transform: scale(1.05);
-  }
-`;
+  {/* Static image on top */}
+  <img
+    src={member.image}
+    alt="Profile"
+    className="w-48 h-48 sm:w-60 sm:h-60 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full object-cover absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+  />
+  </div>
 
-const MemberInfo = styled.div`
-  padding: 20px;
-  
-  h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.2rem;
-    color: #FF6B35;
-  }
-  
-  h4 {
-    font-size: 1rem;
-    color: #ccc;
-    margin-bottom: 1rem;
-    font-weight: 400;
-  }
-  
-  p {
-    font-size: 0.95rem;
-    color: #aaa;
-    margin-bottom: 1rem;
-    line-height: 1.5;
-  }
-`;
+    {/* Brown content card below */}
+    <div className='w-full h-auto sm:w-[24rem] md:w-[26rem] lg:w-[30rem] mt-6 rounded-md p-2'>
+      <h1 className="!text-[#3b2e1e] text-2xl sm:text-3xl text-center pt-4 vedic-title">
+        {member.name}
+      </h1>
+      <p className='text-[#3b2e1e] text-lg sm:text-xl text-center p-2'>
+        {member.role}
+      </p>
+      <p className='text-[#3b2e1e] text-base sm:text-lg text-center p-2'>
+        {member.bio}
+      </p>
 
-const SocialLinks = styled.div`
-  display: flex;
-  gap: 15px;
-  
-  a {
-    color: #aaa;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-    
-    &:hover {
-      color: #FF6B35;
-    }
-  }
-`;
+      <div className='flex flex-row gap-4 justify-center p-4 text-[#3b2e1e] text-3xl'>
+        <div className='w-10 h-10 sm:w-12 sm:h-12 bg-[#f3e9c6] rounded-full flex items-center justify-center  cursor-pointer'>
+          <RiGithubLine><a href={member.social.linkedin} target="_blank" /></RiGithubLine>
+        </div>
+        <div className='w-10 h-10 sm:w-12 sm:h-12 bg-[#f3e9c6] rounded-full flex items-center justify-center cursor-pointer'>
+          <FaLinkedinIn><a href={member.social.github} target="_blank" /></FaLinkedinIn>
+        </div>
+      </div>
+    </div>
 
-const TeamFooter = styled.div`
-  text-align: center;
-  padding: 60px 0;
-  border-top: 1px solid rgba(255, 107, 53, 0.2);
-  
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #FF6B35;
-  }
-  
-  p {
-    font-size: 1.1rem;
-    color: #ccc;
-    max-width: 700px;
-    margin: 0 auto 2rem;
-  }
-`;
+  </div>
+))}
 
-const ContactButton = styled.button`
-  background: linear-gradient(to right, #FF6B35, #f39c12);
-  color: #fff;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
-  
-  &:hover {
-    box-shadow: 0 6px 15px rgba(255, 107, 53, 0.5);
-  }
-`;
+</div>
 
+
+      </>
+  )
+}
 export default Team;
