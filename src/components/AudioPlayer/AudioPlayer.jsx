@@ -7,15 +7,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 const AudioPlayer = () => {
   const { isPlaying, toggleAudio } = useAudioContext();
   const [animating, setAnimating] = useState(false);
-
+  const [buttonReady, setButtonReady] = useState(true);
+  
+  // Keep button state in sync with audio state
+  useEffect(() => {
+    setAnimating(false);
+    setButtonReady(true);
+  }, [isPlaying]);
+  
   // Handle the button click with animation
   const handleButtonClick = () => {
+    if (animating || !buttonReady) return; // Prevent clicks during animation
+    
     setAnimating(true);
-    // Small delay to ensure animation plays before toggling
+    setButtonReady(false); // Prevent multiple clicks
+    
+    // Toggle the audio immediately
+    toggleAudio();
+    
+    // Short delay for better responsiveness
     setTimeout(() => {
-      toggleAudio();
       setAnimating(false);
-    }, 150);
+      setButtonReady(true);
+    }, 200);
   };
 
   return (
@@ -24,7 +38,7 @@ const AudioPlayer = () => {
         <motion.button 
           className="toggle-btn"
           onClick={handleButtonClick}
-          disabled={animating}
+          disabled={animating || !buttonReady}
           whileTap={{ scale: 0.9 }}
           whileHover={{ scale: 1.1 }}
         >
@@ -152,7 +166,8 @@ const AudioPlayerContainer = styled.div`
       opacity: 0.8;
     }
   }
-    .toggle-btn {
+  
+  .toggle-btn {
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -250,7 +265,8 @@ const AudioPlayerContainer = styled.div`
       font-style: italic;
     }
   }
-    @media (max-width: 768px) {
+  
+  @media (max-width: 768px) {
     bottom: 20px;
     right: 20px;
     padding: 8px 15px;
