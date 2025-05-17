@@ -430,6 +430,18 @@ const ScriptureContainer = styled.div`
   padding: 3rem 1rem 5rem;
   overflow: hidden;
   
+  @media (max-width: 992px) {
+    padding: 2.5rem 1rem 4rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 2rem 0.8rem 3.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.5rem 0.5rem 3rem;
+  }
+  
   /* Subtle texture overlay */
   &:before {
     content: "";
@@ -457,6 +469,12 @@ const BackgroundMandala = styled(motion.div)`
   background-repeat: no-repeat;
   z-index: 0;
   pointer-events: none;
+  
+  @media (max-width: 768px) {
+    opacity: 0.05 !important; /* Override any animation value */
+    width: 250vw;
+    height: 250vw;
+  }
 `;
 
 const OmSymbolLeft = styled(motion.div)`
@@ -471,6 +489,24 @@ const OmSymbolLeft = styled(motion.div)`
   background-repeat: no-repeat;
   z-index: 1;
   pointer-events: none;
+  
+  @media (max-width: 992px) {
+    width: 90px;
+    height: 90px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 70px;
+    height: 70px;
+    opacity: 0.08 !important; /* Override any animation value */
+  }
+  
+  @media (max-width: 480px) {
+    width: 50px;
+    height: 50px;
+    top: 3%;
+    left: 1%;
+  }
 `;
 
 const OmSymbolRight = styled(motion.div)`
@@ -486,6 +522,24 @@ const OmSymbolRight = styled(motion.div)`
   z-index: 1;
   transform: rotate(180deg);
   pointer-events: none;
+  
+  @media (max-width: 992px) {
+    width: 90px;
+    height: 90px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 70px;
+    height: 70px;
+    opacity: 0.08 !important; /* Override any animation value */
+  }
+  
+  @media (max-width: 480px) {
+    width: 50px;
+    height: 50px;
+    bottom: 3%;
+    right: 1%;
+  }
 `;
 
 const PageTitle = styled.div`
@@ -499,6 +553,18 @@ const PageTitle = styled.div`
     font-family: 'RaviPrakash-Regular', serif;
     color: #7d5642; /* Deep brown */
     margin-bottom: 0.5rem;
+    
+    @media (max-width: 992px) {
+      font-size: 3.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      font-size: 2.8rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 2.3rem;
+    }
     
     span {
       display: inline-block;
@@ -518,6 +584,14 @@ const PageTitle = styled.div`
     font-size: 1.8rem;
     color: #9c464e; /* Kumkum red */
     margin-bottom: 0.5rem;
+    
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.2rem;
+    }
   }
   
   .english-subtitle {
@@ -525,6 +599,14 @@ const PageTitle = styled.div`
     font-size: 1.2rem;
     color: #7d5642; /* Deep brown */
     font-style: italic;
+    
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -537,6 +619,14 @@ const ScriptureWrapper = styled.div`
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    padding: 0 0.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0;
+  }
 `;
 
 const BookCover = styled.div`
@@ -552,6 +642,24 @@ const BookCover = styled.div`
   background: #e8ddbc;
   position: relative;
   
+  @media (max-width: 992px) {
+    min-height: auto;
+  }
+  
+  @media (max-width: 768px) {
+    box-shadow: 
+      0 15px 35px rgba(82, 55, 29, 0.2),
+      0 8px 15px rgba(0, 0, 0, 0.1),
+      inset 0 0 10px rgba(139, 69, 19, 0.15);
+  }
+  
+  @media (max-width: 480px) {
+    box-shadow: 
+      0 10px 25px rgba(82, 55, 29, 0.18),
+      0 5px 10px rgba(0, 0, 0, 0.08),
+      inset 0 0 8px rgba(139, 69, 19, 0.12);
+  }
+  
   /* Ancient palm leaf style border */
   &:before {
     content: "";
@@ -565,6 +673,14 @@ const BookCover = styled.div`
     pointer-events: none;
     z-index: 10;
     border-radius: 8px;
+    
+    @media (max-width: 768px) {
+      border-width: 6px;
+    }
+    
+    @media (max-width: 480px) {
+      border-width: 4px;
+    }
   }
 `;
 
@@ -574,6 +690,14 @@ const PalmLeafManuscript = styled.div`
   max-width: 90%;
   margin: 0 auto;
   perspective: 2000px;
+  
+  @media (max-width: 992px) {
+    max-width: 95%;
+  }
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 const PageCounter = styled.div`
@@ -590,6 +714,25 @@ const PageCounter = styled.div`
   z-index: 10;
   box-shadow: 0 4px 20px rgba(100, 50, 0, 0.15);
   
+  @media (max-width: 992px) {
+    padding: 0.5rem 2rem;
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.4rem 1.8rem;
+    font-size: 1rem;
+    top: -1.8rem;
+    box-shadow: 0 3px 15px rgba(100, 50, 0, 0.12);
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.3rem 1.5rem;
+    font-size: 0.9rem;
+    top: -1.5rem;
+    box-shadow: 0 2px 10px rgba(100, 50, 0, 0.1);
+  }
+  
   .divider {
     margin: 0 0.5rem;
     opacity: 0.8;
@@ -598,6 +741,7 @@ const PageCounter = styled.div`
 
 const ScripturePage = styled(motion.div)`
   display: flex;
+  flex-direction: row;
   background: #f1e8d3; /* Parchment color */
   border-radius: 15px;
   box-shadow: 
@@ -608,6 +752,16 @@ const ScripturePage = styled(motion.div)`
   max-height: 600px;
   cursor: grab;
   transform-style: preserve-3d;
+  
+  @media (max-width: 992px) {
+    flex-direction: column;
+    min-height: auto;
+    max-height: none;
+  }
+  
+  @media (max-width: 768px) {
+    min-height: auto;
+  }
   
   &.grabbing {
     cursor: grabbing;
@@ -644,7 +798,8 @@ const ScripturePage = styled(motion.div)`
   }
 `;
 
-const LeftPage = styled.div`  flex: 1;
+const LeftPage = styled.div`
+  flex: 1;
   padding: 2.5rem;
   position: relative;
   overflow: hidden;
@@ -652,6 +807,21 @@ const LeftPage = styled.div`  flex: 1;
   max-height: 500px; /* Control max height to prevent overflow */
   display: flex;
   flex-direction: column;
+  
+  @media (max-width: 992px) {
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(139, 69, 19, 0.15);
+    padding: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
   
   /* Decorative corners */
   &:before, &:after {
@@ -661,6 +831,16 @@ const LeftPage = styled.div`  flex: 1;
     height: 60px;
     z-index: 1;
     opacity: 0.3;
+    
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+    }
+    
+    @media (max-width: 480px) {
+      width: 30px;
+      height: 30px;
+    }
   }
   
   &:before {
@@ -678,17 +858,33 @@ const LeftPage = styled.div`  flex: 1;
     border-right: 2px solid #d4af37;
     border-radius: 0 0 15px 0;
   }
-    .page-content {
+  .page-content {
     font-family: 'Georgia', serif;
     color: #5d4037; /* Deep brown */
     font-size: 1.1rem;
     line-height: 1.8;
     position: relative;
-    z-index: 2;    max-height: 420px; /* Fixed height to prevent overflow */
+    z-index: 2;
+    max-height: 420px; /* Fixed height to prevent overflow */
     overflow-y: auto; /* Allow scrolling if needed */
     flex: 1;
     scrollbar-width: thin;
     scrollbar-color: rgba(193, 126, 64, 0.5) rgba(245, 236, 217, 0.1);
+    
+    @media (max-width: 992px) {
+      max-height: none; /* Allow content to flow naturally on tablets */
+      overflow-y: visible;
+    }
+    
+    @media (max-width: 768px) {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
     
     &::-webkit-scrollbar {
       width: 8px;
@@ -750,8 +946,7 @@ const LeftPage = styled.div`  flex: 1;
         font-family: 'RaviPrakash-Regular', serif;
       }
     }
-    
-    .vedic-quote {
+      .vedic-quote {
       font-family: 'RaviPrakash-Regular', serif;
       font-size: 1.5rem;
       text-align: center;
@@ -759,6 +954,23 @@ const LeftPage = styled.div`  flex: 1;
       margin: 2.5rem auto;
       padding: 1.5rem;
       position: relative;
+      
+      @media (max-width: 992px) {
+        margin: 2rem auto;
+        font-size: 1.4rem;
+      }
+      
+      @media (max-width: 768px) {
+        font-size: 1.3rem;
+        padding: 1rem;
+        margin: 1.5rem auto;
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 1.2rem;
+        padding: 0.8rem;
+        margin: 1.2rem auto;
+      }
       
       &:before, &:after {
         content: "";
@@ -772,6 +984,14 @@ const LeftPage = styled.div`  flex: 1;
           rgba(193, 126, 64, 0) 100%
         );
         transform: translateX(-50%);
+        
+        @media (max-width: 768px) {
+          width: 120px;
+        }
+        
+        @media (max-width: 480px) {
+          width: 100px;
+        }
       }
       
       &:before {
@@ -877,6 +1097,20 @@ const RightPage = styled.div`
   flex-direction: column;
   overflow: hidden;
   
+  @media (max-width: 992px) {
+    padding: 2rem;
+    padding-top: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    padding-top: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+  
   /* Decorative corners */
   &:before, &:after {
     content: "";
@@ -885,6 +1119,16 @@ const RightPage = styled.div`
     height: 60px;
     z-index: 1;
     opacity: 0.3;
+    
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+    }
+    
+    @media (max-width: 480px) {
+      width: 30px;
+      height: 30px;
+    }
   }
   
   &:before {
@@ -909,6 +1153,18 @@ const ChapterTitle = styled.div`
   margin-bottom: 2.5rem;
   position: relative;
   
+  @media (max-width: 992px) {
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    margin-bottom: 1.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 1.5rem;
+  }
+  
   &:after {
     content: "";
     position: absolute;
@@ -922,6 +1178,16 @@ const ChapterTitle = styled.div`
       rgba(193, 126, 64, 0.5) 50%,
       rgba(193, 126, 64, 0) 100%
     );
+    
+    @media (max-width: 768px) {
+      width: 120px;
+      bottom: -0.8rem;
+    }
+    
+    @media (max-width: 480px) {
+      width: 100px;
+      bottom: -0.7rem;
+    }
   }
   
   .sanskrit-title {
@@ -929,6 +1195,16 @@ const ChapterTitle = styled.div`
     font-size: 1.5rem;
     color: #9c464e; /* Kumkum red */
     margin-bottom: 0.5rem;
+    
+    @media (max-width: 768px) {
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
   }
   
   h2 {
@@ -936,6 +1212,20 @@ const ChapterTitle = styled.div`
     font-size: 2.3rem;
     color: #7d5642; /* Deep brown */
     margin-bottom: 0.5rem;
+    
+    @media (max-width: 992px) {
+      font-size: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
   }
   
   .english-title {
@@ -943,6 +1233,14 @@ const ChapterTitle = styled.div`
     font-size: 1.2rem;
     font-style: italic;
     color: #7d5642;
+    
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -977,6 +1275,19 @@ const ChapterNav = styled.div`
   border-radius: 10px;
   padding: 1.5rem;
   border: 1px solid rgba(193, 126, 64, 0.1);
+  
+  @media (max-width: 992px) {
+    margin-top: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+  }
 `;
 
 const NavLabel = styled.div`
@@ -985,12 +1296,32 @@ const NavLabel = styled.div`
   font-size: 1.2rem;
   margin-bottom: 1rem;
   text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+  }
 `;
 
 const ChapterList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  
+  @media (max-width: 768px) {
+    gap: 0.6rem;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.5rem;
+  }
 `;
 
 const ChapterItem = styled.div`
@@ -1005,6 +1336,16 @@ const ChapterItem = styled.div`
   border: 1px solid ${props => props.active ? 'rgba(193, 126, 64, 0.2)' : 'transparent'};
   position: relative;
   
+  @media (max-width: 768px) {
+    padding: 0.7rem;
+    gap: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.6rem;
+    gap: 0.6rem;
+  }
+  
   /* Add decorative element for active item */
   ${props => props.active && `
     &:before {
@@ -1014,6 +1355,16 @@ const ChapterItem = styled.div`
       color: #c17e40;
       font-family: 'RaviPrakash-Regular', serif;
       font-size: 1.2rem;
+      
+      @media (max-width: 768px) {
+        font-size: 1.1rem;
+        left: -8px;
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 1rem;
+        left: -6px;
+      }
     }
   `}
   
@@ -1034,12 +1385,32 @@ const ChapterNumber = styled.div`
   font-family: 'Georgia', serif;
   font-weight: bold;
   font-size: 0.9rem;
+  
+  @media (max-width: 768px) {
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+  
+  @media (max-width: 480px) {
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+  }
 `;
 
 const ChapterName = styled.div`
   font-family: 'Georgia', serif;
   color: #5d4037;
   font-size: 1rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const NavigationControls = styled.div`
@@ -1048,6 +1419,17 @@ const NavigationControls = styled.div`
   align-items: center;
   margin-top: 2rem;
   padding: 0 1rem;
+  
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  @media (max-width: 480px) {
+    margin-top: 1.5rem;
+    padding: 0 0.5rem;
+  }
 `;
 
 const DragInstructions = styled.div`
@@ -1064,6 +1446,10 @@ const DragInstructions = styled.div`
   border-radius: 20px;
   border: 1px solid rgba(193, 126, 64, 0.2);
   box-shadow: 0 2px 8px rgba(125, 86, 66, 0.1);
+  
+  @media (max-width: 768px) {
+    display: none; /* Hide on mobile */
+  }
   
   .drag-icon {
     margin: 0 0.5rem;
@@ -1089,6 +1475,18 @@ const NavButton = styled(motion.button)`
   align-items: center;
   position: relative;
   overflow: hidden;
+  
+  @media (max-width: 768px) {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    flex: 1;
+    justify-content: center;
+  }
   
   &:disabled {
     background: #ccc;
@@ -1141,10 +1539,13 @@ const media = {
 };
 
 // Add responsive styles using a proper component
-const ResponsiveStyles = styled.div`  ${media.tablet} {
+const ResponsiveStyles = styled.div`  
+  /* Tablet Styles */
+  ${media.tablet} {
     ${ScripturePage} {
       flex-direction: column;
       min-height: auto;
+      max-height: none;
     }
     
     ${PageTitle} h1 {
@@ -1153,6 +1554,21 @@ const ResponsiveStyles = styled.div`  ${media.tablet} {
     
     ${LeftPage}, ${RightPage} {
       padding: 2rem;
+      max-height: none;
+    }
+    
+    ${LeftPage} {
+      border-right: none;
+      border-bottom: 1px solid rgba(139, 69, 19, 0.15);
+    }
+    
+    ${LeftPage} .page-content {
+      max-height: none;
+      overflow-y: visible;
+    }
+    
+    ${RightPage} {
+      padding-top: 1rem;
     }
     
     ${ChapterTitle} h2 {
@@ -1162,14 +1578,25 @@ const ResponsiveStyles = styled.div`  ${media.tablet} {
     ${PalmLeafManuscript} {
       max-width: 95%;
     }
+    
+    ${OmSymbolLeft}, ${OmSymbolRight} {
+      width: 90px;
+      height: 90px;
+    }
   }
-    ${media.mobile} {
+  
+  /* Mobile Styles */
+  ${media.mobile} {
     ${PageTitle} h1 {
       font-size: 2.8rem;
     }
     
-    .subtitle {
+    ${PageTitle} .subtitle {
       font-size: 1.5rem;
+    }
+    
+    ${PageTitle} .english-subtitle {
+      font-size: 1.1rem;
     }
     
     ${LeftPage}, ${RightPage} {
@@ -1180,11 +1607,16 @@ const ResponsiveStyles = styled.div`  ${media.tablet} {
       font-size: 1.8rem;
     }
     
-    .page-content {
-      font-size: 1rem;
+    ${ChapterTitle} .sanskrit-title {
+      font-size: 1.3rem;
     }
     
-    .vedic-quote {
+    ${LeftPage} .page-content {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    ${LeftPage} .vedic-quote {
       font-size: 1.3rem;
       padding: 1rem;
     }
@@ -1193,20 +1625,52 @@ const ResponsiveStyles = styled.div`  ${media.tablet} {
       display: none;
     }
     
+    ${NavigationControls} {
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    
     ${PalmLeafManuscript} {
       max-width: 100%;
     }
+    
+    ${ScripturePage} {
+      min-height: auto;
+      box-shadow: 0 10px 25px rgba(82, 55, 29, 0.2);
+    }
+    
+    ${ChapterNav} {
+      padding: 1rem;
+    }
+    
+    ${ChapterList} {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    ${OmSymbolLeft}, ${OmSymbolRight} {
+      width: 70px;
+      height: 70px;
+      opacity: 0.08;
+    }
+    
+    ${BackgroundMandala} {
+      opacity: 0.05;
+    }
   }
-    ${media.smallMobile} {
+  
+  /* Small Mobile Styles */
+  ${media.smallMobile} {
     ${PageTitle} h1 {
       font-size: 2.3rem;
     }
     
-    .subtitle {
+    ${PageTitle} .subtitle {
       font-size: 1.2rem;
     }
     
-    .english-subtitle {
+    ${PageTitle} .english-subtitle {
       font-size: 1rem;
     }
     
@@ -1218,11 +1682,20 @@ const ResponsiveStyles = styled.div`  ${media.tablet} {
       font-size: 1.5rem;
     }
     
-    .page-content {
-      font-size: 0.95rem;
+    ${ChapterTitle} .sanskrit-title {
+      font-size: 1.1rem;
     }
     
-    .vedic-quote {
+    ${ChapterTitle} .english-title {
+      font-size: 1rem;
+    }
+    
+    ${LeftPage} .page-content {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    ${LeftPage} .vedic-quote {
       font-size: 1.2rem;
       padding: 0.8rem;
     }
@@ -1230,6 +1703,34 @@ const ResponsiveStyles = styled.div`  ${media.tablet} {
     ${NavButton} {
       padding: 0.6rem 1.2rem;
       font-size: 0.9rem;
+      flex: 1;
+    }
+    
+    ${ScripturePage} {
+      box-shadow: 0 5px 15px rgba(82, 55, 29, 0.15);
+    }
+    
+    ${ChapterItem} {
+      padding: 0.6rem;
+    }
+    
+    ${ChapterName} {
+      font-size: 0.9rem;
+    }
+    
+    ${ChapterNumber} {
+      width: 25px;
+      height: 25px;
+      font-size: 0.8rem;
+    }
+    
+    ${OmSymbolLeft}, ${OmSymbolRight} {
+      width: 50px;
+      height: 50px;
+    }
+    
+    ${NavLabel} {
+      font-size: 1rem;
     }
   }
 `;

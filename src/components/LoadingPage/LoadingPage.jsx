@@ -17,10 +17,20 @@ const LoadingPage = ({ onEnter }) => {
     }, 2000);
     
     return () => clearTimeout(timer);
-  }, []);    const handleEnter = () => {    // Start audio when user enters the site
-    toggleAudio();
-      // Store in session that user has entered the site
+  }, []);  const handleEnter = () => {
+    // Store in session that user has entered the site
     sessionStorage.setItem('hasEntered', 'true');
+    
+    // Set audio to play by default
+    sessionStorage.setItem('audioPlaying', 'true');
+    
+    // Force the audio to play
+    console.log("User entering site, attempting to start audio");
+    try {
+      toggleAudio();
+    } catch (err) {
+      console.error("Error toggling audio in handleEnter:", err);
+    }
     
     // Call the provided onEnter function to update App state
     if (onEnter && typeof onEnter === 'function') {

@@ -99,10 +99,9 @@ function App() {
                 element={
                   <React.Fragment>
                     <LoadingPage onEnter={updateHasEntered} />
-                    <AudioPlayer />
                   </React.Fragment>
                 }
-              />              <Route 
+              /><Route 
                 path="/home" 
                 element={
                   <HomeWrapper 
@@ -182,9 +181,8 @@ function App() {
             </Routes>
           </AnimatePresence>
         </main>
-        
-        {hasEntered && <Footer />}
-        {hasEntered && <AudioPlayer />}
+          {hasEntered && <Footer />}
+        <AudioPlayer />
       </Router>
     </AudioProvider>
   );
