@@ -1,104 +1,323 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { FaExpandAlt, FaCompressAlt, FaRegBookmark, FaBookmark, FaInfoCircle } from 'react-icons/fa';
+import { GiScrollQuill, GiIndiaGate } from 'react-icons/gi';
+import { BsCalendarEvent, BsClock, BsGearFill } from 'react-icons/bs';
 
 const Schedule = () => {
   const [activeDay, setActiveDay] = useState(1);
+  const [expandedItems, setExpandedItems] = useState({});
+  const [bookmarkedItems, setBookmarkedItems] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
   
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Load bookmarks from localStorage
+    const savedBookmarks = JSON.parse(localStorage.getItem('hackathonBookmarks')) || {};
+    setBookmarkedItems(savedBookmarks);
   }, []);
 
-  // We're only keeping Day 1 as requested
+  useEffect(() => {
+    // Filter schedule data based on search term
+    if (scheduleData[activeDay]) {
+      const filtered = scheduleData[activeDay].filter(item => 
+        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (item.subItems && item.subItems.some(sub => 
+          sub.description && sub.description.toLowerCase().includes(searchTerm.toLowerCase())
+        ))
+      );
+      setFilteredData(filtered);
+    }
+  }, [searchTerm, activeDay]);
+
+  const toggleExpand = (index) => {
+    setExpandedItems(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  const toggleBookmark = (index) => {
+    const newBookmarks = {
+      ...bookmarkedItems,
+      [index]: !bookmarkedItems[index]
+    };
+    setBookmarkedItems(newBookmarks);
+    localStorage.setItem('hackathonBookmarks', JSON.stringify(newBookmarks));
+  };
+
+  // Enhanced schedule data with more structure and icons
   const scheduleData = {
     1: [
       {
         title: "Introduction",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3L17 8L12 13L7 8L12 3Z" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M12 13V21" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M9 16H15" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M7 8L4 12" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M17 8L20 12" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <circle cx="12" cy="8" r="1" fill="#4a3520"/>
+        </svg>,
         highlight: true,
         description: `Welcome to Code Veda, a unique hackathon themed "Digital Dharma" where innovation meets intention. Inspired by timeless Vedic values, Code Veda champions ethical and purposeful coding that aligns with truth (Satya), duty (Dharma), and selfless service (Seva). This is more than just a tech event, it's a call to create solutions that not only solve problems but also uphold principles that guide a responsible and compassionate digital future. Join us as we code with conscience and build with purpose.`
       },
       {
         title: "Overview",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="9" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M12 8V12" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <circle cx="12" cy="16" r="1" fill="#4a3520"/>
+        </svg>,
         highlight: true,
         description: `• Team Size: 2–4 Members 
         • Eligibility: Open to all Tech Enthusiast Students 
         • Mode: Hybrid (Online and Offline)
-        • Final Round Venue: Masters' Union`
+        • Final Round Venue: Masters' Union`,
+        subItems: [
+          {
+            title: "Participation Benefits",
+            description: `- Networking with industry experts
+- Chance to win exciting prizes
+- Certificate of participation
+- Opportunity to work on real-world problems`,
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 1L12.2451 7.90983H19.5106L13.6327 12.1803L15.8779 19.0902L10 14.8197L4.12215 19.0902L6.36729 12.1803L0.489435 7.90983H7.75486L10 1Z" stroke="#4a3520" strokeWidth="1" fill="none"/>
+              <circle cx="10" cy="10" r="4" stroke="#4a3520" strokeWidth="1" fill="none"/>
+            </svg>
+          }
+        ]
       },
       {
         title: "Timeline",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="4" width="18" height="16" rx="2" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M3 10H21" stroke="#4a3520" strokeWidth="1.5"/>
+          <path d="M8 2V6" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M16 2V6" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M7.5 14H8.5" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M11.5 14H12.5" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M15.5 14H16.5" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M7.5 17H8.5" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M11.5 17H12.5" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M15.5 17H16.5" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>,
         highlight: true,
         description: `➤ 20 August - Registration closes
 ➤ 15 July–25 August - PPT submission
 ➤ 1 September - PPT round result
 ➤ 7 September - Online Round
 ➤ 8 September - Online round result (Tentative)
-➤ 16–17 September - Offline round`
+➤ 16–17 September - Offline round`,
+        timelineVisual: [
+          { date: "20 Aug", event: "Registrations Close", completed: false },
+          { date: "25 Aug", event: "PPT Submission", completed: false },
+          { date: "1 Sep", event: "PPT Results", completed: false },
+          { date: "7 Sep", event: "Online Round", completed: false },
+          { date: "16-17 Sep", event: "Offline Hackathon", completed: false }
+        ]
       },
       {
         title: "Code Of Conduct",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3L3 8.2V9.8L12 15L21 9.8V8.2L12 3Z" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M6 11.5V16.5M18 11.5V16.5" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M12 16L12 21" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <circle cx="12" cy="7.5" r="1.5" fill="#4a3520"/>
+        </svg>,
         highlight: true,
-        description: `As part of our commitment to fostering a safe, respectful, and inclusive environment during the hackathon, we kindly remind you to immediately report any inappropriate behavior to the organizing team.
-
-**Consequences of Inappropriate Behavior:**
-• Verbal Warning (for minor infractions)
+        description: `As part of our commitment to fostering a safe, respectful, and inclusive environment during the hackathon, we kindly remind you to immediately report any inappropriate behavior to the organizing team.`,
+        subItems: [
+          {
+            title: "Consequences of Inappropriate Behavior",
+            description: `• Verbal Warning (for minor infractions)
 • Immediate Disqualification from the hackathon
 • Removal from the event venue
-• Permanent ban from future events`
+• Permanent ban from future events`,
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10" cy="10" r="8" stroke="#4a3520" strokeWidth="1.2" fill="none"/>
+              <path d="M5 5L15 15" stroke="#4a3520" strokeWidth="1.2" strokeLinecap="round"/>
+            </svg>
+          }
+        ]
       },
       {
         title: "Tracks",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 6H21" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M3 12H21" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M3 18H21" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <circle cx="7" cy="6" r="2" fill="#4a3520" opacity="0.7" />
+          <circle cx="12" cy="12" r="2" fill="#4a3520" opacity="0.7" />
+          <circle cx="17" cy="18" r="2" fill="#4a3520" opacity="0.7" />
+        </svg>,
         highlight: true,
-        description: `• Code For Karma • Open Innovation • Healthcare • IoT • AR/VR • Sustainable Development • App Development`
+        description: `• Code For Karma • Open Innovation • Healthcare • IoT • AR/VR • Sustainable Development • App Development`,
+        subItems: [
+          {
+            title: "Track Details",
+            description: `*Code For Karma*: Solutions that benefit society
+*Open Innovation*: Most creative and innovative ideas
+*Healthcare*: Medical and wellness technologies
+*Sustainable Development*: Environmental solutions`,
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="9" r="6" stroke="#4a3520" strokeWidth="1.2" fill="none"/>
+              <path d="M14 14L17 17" stroke="#4a3520" strokeWidth="1.2" strokeLinecap="round"/>
+              <path d="M9 6V12" stroke="#4a3520" strokeWidth="1" strokeLinecap="round"/>
+              <path d="M6 9H12" stroke="#4a3520" strokeWidth="1" strokeLinecap="round"/>
+            </svg>
+          }
+        ]
       },
       {
         title: "Phase Details",
         highlight: true,
         isHeader: true,
-        description: ``
+        icon: <BsGearFill />
       },
       {
         title: "Phase 1: Registrations",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 3H18C19.1046 3 20 3.89543 20 5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V5C4 3.89543 4.89543 3 6 3Z" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M9 7H15" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M8 11H16" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M10 15H14" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M15 3V5M9 3V5" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>,
         highlight: true,
         description: `➤ Registrations will be open till 20th August 2025
 ➤ All participants are expected to form teams of 2-4 members
-➤ No changes will be allowed in team structure after registration closes`
+➤ No changes will be allowed in team structure after registration closes`,
+        time: "Till 20 Aug"
       },
       {
         title: "Phase 2: PPT Submission",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="18" height="18" rx="2" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M3 9H21" stroke="#4a3520" strokeWidth="1.5"/>
+          <path d="M9 21L9 9" stroke="#4a3520" strokeWidth="1.5"/>
+          <path d="M15 15V17" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M12 13V17" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M18 11V17" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>,
         highlight: true,
         description: `➤ PPT submission starts on 15th July 2025
 ➤ Deadline for PPT submission is 25th August 2025
-➤ Project description should be added alongside the PPT`
+➤ Project description should be added alongside the PPT`,
+        time: "15 Jul - 25 Aug",
+        subItems: [
+          {
+            title: "PPT Guidelines",
+            description: `- Maximum 10 slides
+- Clearly define problem statement
+- Include proposed solution architecture
+- Mention potential impact`,
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="14" height="14" rx="1" stroke="#4a3520" strokeWidth="1" fill="none"/>
+              <path d="M6 7H14" stroke="#4a3520" strokeWidth="1" strokeLinecap="round"/>
+              <path d="M6 10H14" stroke="#4a3520" strokeWidth="1" strokeLinecap="round"/>
+              <path d="M6 13H12" stroke="#4a3520" strokeWidth="1" strokeLinecap="round"/>
+            </svg>
+          }
+        ]
       },
       {
         title: "Phase 3: Online Round",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="4" width="18" height="12" rx="1" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M7 16H17V18C17 18.5523 16.5523 19 16 19H8C7.44772 19 7 18.5523 7 18V16Z" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M9 20H15" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M10 8L14 10L10 12V8Z" stroke="#4a3520" strokeWidth="1" fill="none"/>
+        </svg>,
         highlight: true,
         description: `➤ Online round will be conducted on 7th September 2025
 ➤ Shortlisted teams from the PPT round will move to the online round
-➤ Results of this round will be declared next day, i.e. on 8th September 2025`
+➤ Results of this round will be declared next day, i.e. on 8th September 2025`,
+        time: "7 Sep",
+        subItems: [
+          {
+            title: "Evaluation Criteria",
+            description: `- Innovation (30%)
+- Technical Complexity (25%)
+- Practical Implementation (20%)
+- Presentation (15%)
+- Social Impact (10%)`,
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 4C5 3.44772 5.44772 3 6 3H14C14.5523 3 15 3.44772 15 4V17L10 14L5 17V4Z" stroke="#4a3520" strokeWidth="1" fill="none"/>
+              <path d="M8 7H12" stroke="#4a3520" strokeWidth="1" strokeLinecap="round"/>
+              <path d="M8 10H12" stroke="#4a3520" strokeWidth="1" strokeLinecap="round"/>
+            </svg>
+          }
+        ]
       },
       {
         title: "Requirements",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="9" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M8 12L11 15L16 9" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>,
         highlight: true,
         description: `• Github Repository
-• Idea Presentation`
+• Idea Presentation`,
+        time: "All Phases"
       },
       {
         title: "Rules",
+        icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 3H18C19.1046 3 20 3.89543 20 5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V5C4 3.89543 4.89543 3 6 3Z" stroke="#4a3520" strokeWidth="1.5" fill="none"/>
+          <path d="M7 7H17" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M7 11H17" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M7 15H13" stroke="#4a3520" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>,
         highlight: true,
         description: `• Presentation should clearly outline approach and scope
-• Allowed Tools: Any open-source framework and libraries`
+• Allowed Tools: Any open-source framework and libraries`,
+        subItems: [
+          {
+            title: "Additional Rules",
+            description: `- All code must be written during the hackathon
+- Plagiarism will result in disqualification
+- Teams must be present for all judging sessions`,
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 3L17.5 16H2.5L10 3Z" stroke="#4a3520" strokeWidth="1" fill="none"/>
+              <path d="M10 12V8" stroke="#4a3520" strokeWidth="1.2" strokeLinecap="round"/>
+              <circle cx="10" cy="14" r="0.5" fill="#4a3520" stroke="#4a3520" strokeWidth="0.5"/>
+            </svg>
+          }
+        ]
       },
       {
         title: "Phase 4: Offline Round",
+        icon: <GiIndiaGate />,
         highlight: true,
         description: `➤ Offline round will be conducted on 16th-17th September 2025 at Masters' Union
-➤ It will be a 24 hours high energy hackathon`
+➤ It will be a 24 hours high energy hackathon`,
+        time: "16-17 Sep",
+        subItems: [
+          {
+            title: "What to Bring",
+            description: `- Laptop and charger
+- Any special hardware needed
+- Government ID for verification
+- Enthusiasm and creativity!`,
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 5C5 3.89543 5.89543 3 7 3H13C14.1046 3 15 3.89543 15 5V15C15 16.1046 14.1046 17 13 17H7C5.89543 17 5 16.1046 5 15V5Z" stroke="#4a3520" strokeWidth="1" fill="none"/>
+              <path d="M5 7H15" stroke="#4a3520" strokeWidth="1"/>
+              <path d="M8 10H12" stroke="#4a3520" strokeWidth="1" strokeLinecap="round"/>
+              <path d="M8 13H10" stroke="#4a3520" strokeWidth="1" strokeLinecap="round"/>
+              <path d="M8 3V7" stroke="#4a3520" strokeWidth="1"/>
+              <path d="M12 3V7" stroke="#4a3520" strokeWidth="1"/>
+            </svg>
+          }
+        ]
       },
       {
-        title: "Schedule",
+        title: "Detailed Schedule",
+        icon: <BsClock />,
         highlight: true,
         time: "16-17 Sep 2025",
         description: `• Opening Ceremony: 11a.m. -12 p.m. - Angaar Batch Session
@@ -108,10 +327,36 @@ const Schedule = () => {
 • Judging Session
 • Results
 • Prize Distribution
-• Closing`
+• Closing`,
+        subItems: [
+          {
+            title: "Detailed Timeline",
+            description: `*Day 1 (16 Sep)*
+- 11:00 AM: Registration
+- 12:00 PM: Opening Ceremony
+- 1:00 PM: Lunch
+- 2:00 PM: Hacking Begins
+- 7:00 PM: Dinner
+- 12:00 AM: Midnight Snack
+
+*Day 2 (17 Sep)*
+- 8:00 AM: Breakfast
+- 12:00 PM: Lunch
+- 2:00 PM: Hacking Ends
+- 3:00 PM: Judging
+- 5:00 PM: Closing Ceremony`,
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10" cy="10" r="7" stroke="#4a3520" strokeWidth="1" fill="none"/>
+              <path d="M10 6V10H13" stroke="#4a3520" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="10" cy="10" r="1" fill="#4a3520"/>
+            </svg>
+          }
+        ]
       }
     ]
   };
+
+  const currentData = searchTerm ? filteredData : scheduleData[activeDay];
 
   return (
     <AncientManuscriptContainer>
@@ -127,6 +372,8 @@ const Schedule = () => {
         <div className="manuscript-edge right-edge"></div>
         
         <header className="manuscript-header">
+          <div className="decorative-corner top-left"></div>
+          <div className="decorative-corner top-right"></div>
           <h1 className="vedic-title">॥ हॅकेथॉन क्रमः ॥</h1>
           <div className="title-translation">Hackathon Schedule</div>
           <div className="manuscript-decoration">
@@ -134,6 +381,25 @@ const Schedule = () => {
               <path d="M0,10 C20,0 40,20 50,10 C60,0 80,20 100,10" stroke="#4a3520" fill="none" strokeWidth="0.5"/>
               <path d="M50,0 C40,5 30,15 50,20 C70,15 60,5 50,0" stroke="#4a3520" fill="none" strokeWidth="0.5"/>
             </svg>
+          </div>
+          
+          {/* Search Bar */}
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search schedule..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+            {searchTerm && (
+              <button 
+                className="clear-search" 
+                onClick={() => setSearchTerm('')}
+              >
+                ✕
+              </button>
+            )}
           </div>
         </header>
 
@@ -149,41 +415,113 @@ const Schedule = () => {
           </div>
         </div>
         
-
         <div className="manuscript-content">
-          {scheduleData[1].map((item, index) => (
-            <motion.div
-              key={index}
-              className={`schedule-item ${item.highlight ? 'highlight' : ''} ${item.isHeader ? 'section-header' : ''}`}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.03, duration: 0.5 }}
-            >
-              <div className="time-block">
-                <div className="time-marker"></div>
-                <span className="time">{item.time}</span>
-              </div>
-              
-              <div className="event-block">
-                <h3 className="event-title">{item.title}</h3>
-                {item.location && (
-                  <div className="event-location">
-                    {item.location}
+          {currentData && currentData.length > 0 ? (
+            currentData.map((item, index) => (
+              <motion.div
+                key={index}
+                className={`schedule-item ${item.highlight ? 'highlight' : ''} ${item.isHeader ? 'section-header' : ''}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05, duration: 0.5 }}
+              >
+                <div className="time-block">
+                  <div className="time-marker"></div>
+                  <span className="time">{item.time}</span>
+                </div>
+                
+                <div className="event-block">
+                  <div className="event-header" onClick={() => item.subItems && toggleExpand(index)}>
+                    {item.icon && <span className="event-icon">{item.icon}</span>}
+                    <h3 className="event-title">{item.title}</h3>
+                    <div className="event-actions">
+                      {item.subItems && (
+                        <motion.span 
+                          className="expand-icon"
+                          animate={{ rotate: expandedItems[index] ? 180 : 0 }}
+                          whileHover={{ scale: 1.2 }}
+                        >
+                          {expandedItems[index] ? <FaCompressAlt /> : <FaExpandAlt />}
+                        </motion.span>
+                      )}
+                      <motion.span 
+                        className="bookmark-icon"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleBookmark(index);
+                        }}
+                        whileHover={{ scale: 1.2 }}
+                      >
+                        {bookmarkedItems[index] ? <FaBookmark color="#d4a017" /> : <FaRegBookmark />}
+                      </motion.span>
+                    </div>
                   </div>
-                )}
-                {!item.isHeader && (
-                  <div className="event-description">{item.description}</div>
-                )}
-                {item.highlight && !item.isHeader && (
-                  <div className="highlight-marker">
-                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="10" cy="10" r="5" fill="#4a3520" opacity="0.5" />
-                    </svg>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          ))}
+                  
+                  {item.location && (
+                    <div className="event-location">
+                      {item.location}
+                    </div>
+                  )}
+                  
+                  {!item.isHeader && (
+                    <motion.div 
+                      className="event-description"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                    >
+                      {item.description}
+                    </motion.div>
+                  )}
+                  
+                  {item.highlight && !item.isHeader && (
+                    <div className="highlight-marker">
+                      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="5" fill="#4a3520" opacity="0.5" />
+                      </svg>
+                    </div>
+                  )}
+                  
+                  {item.timelineVisual && (
+                    <div className="timeline-visual">
+                      {item.timelineVisual.map((tl, i) => (
+                        <div key={i} className="timeline-item">
+                          <div className={`timeline-dot ${tl.completed ? 'completed' : ''}`}></div>
+                          <div className="timeline-date">{tl.date}</div>
+                          <div className="timeline-event">{tl.event}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  <AnimatePresence>
+                    {item.subItems && expandedItems[index] && (
+                      <motion.div 
+                        className="sub-items-container"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                      >
+                        {item.subItems.map((subItem, subIndex) => (
+                          <div key={subIndex} className="sub-item">
+                            <div className="sub-item-header">
+                              {subItem.icon && <span className="sub-item-icon">{subItem.icon}</span>}
+                              {subItem.title && <h4 className="sub-item-title">{subItem.title}</h4>}
+                            </div>
+                            <div className="sub-item-description">{subItem.description}</div>
+                          </div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            <div className="no-results">
+              <h3>No schedule items found</h3>
+              <p>Try adjusting your search term</p>
+            </div>
+          )}
         </div>
 
         <div className="manuscript-footer">
@@ -202,6 +540,30 @@ const Schedule = () => {
               <span>Prizes</span>
               <span className="link-decoration">❉</span>
             </Link>
+            <Link to="/faq" className="manuscript-link">
+              <span>FAQ</span>
+              <span className="link-decoration">❉</span>
+            </Link>
+            <Link to="/bookmarks" className="manuscript-link">
+              <span>My Bookmarks</span>
+              <span className="link-decoration">❉</span>
+            </Link>
+          </div>
+          
+          <div className="footer-seal">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="45" stroke="#4a3520" strokeWidth="2" fill="none" />
+              <path d="M50,10 A40,40 0 0,1 90,50 A40,40 0 0,1 50,90 A40,40 0 0,1 10,50 A40,40 0 0,1 50,10 Z" 
+                stroke="#4a3520" strokeWidth="1" fill="none" strokeDasharray="5,5" />
+              <text x="50" y="50" textAnchor="middle" dominantBaseline="middle" 
+                fontFamily="Arial" fontSize="12" fill="#4a3520" fontWeight="bold">
+                CODE VEDA
+              </text>
+              <text x="50" y="65" textAnchor="middle" dominantBaseline="middle" 
+                fontFamily="Arial" fontSize="8" fill="#4a3520">
+                DIGITAL DHARMA
+              </text>
+            </svg>
           </div>
         </div>
       </motion.div>
@@ -217,6 +579,22 @@ const AncientManuscriptContainer = styled.div`
   display: flex;
   justify-content: center;
   color: #4a3520;
+  position: relative;
+
+  /* Background texture */
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(165, 132, 66, 0.05) 0%, transparent 20%),
+      radial-gradient(circle at 90% 80%, rgba(165, 132, 66, 0.05) 0%, transparent 20%),
+      linear-gradient(to bottom, rgba(243, 240, 230, 0.9), rgba(243, 240, 230, 0.9));
+    z-index: -1;
+  }
 
   .manuscript-page {
     position: relative;
@@ -226,9 +604,12 @@ const AncientManuscriptContainer = styled.div`
     background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"),
       linear-gradient(to bottom, #e8e0cc 0%, #d6cdb2 100%);
     padding: 3rem 2rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 
+      0 5px 20px rgba(0, 0, 0, 0.1),
+      inset 0 0 50px rgba(210, 190, 150, 0.2);
     border-radius: 2px;
     overflow: hidden;
+    border: 1px solid rgba(74, 53, 32, 0.1);
 
     /* Creating torn page effect */
     &::before, &::after {
@@ -274,6 +655,29 @@ const AncientManuscriptContainer = styled.div`
     margin-bottom: 3rem;
     position: relative;
     z-index: 2;
+    padding: 0 2rem;
+    
+    .decorative-corner {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border: 1px solid rgba(74, 53, 32, 0.3);
+      border-radius: 5px;
+      
+      &.top-left {
+        top: -10px;
+        left: 10px;
+        border-right: none;
+        border-bottom: none;
+      }
+      
+      &.top-right {
+        top: -10px;
+        right: 10px;
+        border-left: none;
+        border-bottom: none;
+      }
+    }
     
     .vedic-title {
       font-family: 'Noto Sans', 'Arial', sans-serif;
@@ -281,6 +685,7 @@ const AncientManuscriptContainer = styled.div`
       margin-bottom: 0.5rem;
       color: #4a3520;
       letter-spacing: 1px;
+      text-shadow: 1px 1px 2px rgba(74, 53, 32, 0.1);
     }
     
     .title-translation {
@@ -288,12 +693,62 @@ const AncientManuscriptContainer = styled.div`
       margin-bottom: 1.5rem;
       font-style: italic;
       color: #6c5b40;
+      letter-spacing: 0.5px;
     }
     
     .manuscript-decoration {
       width: 60%;
       margin: 0 auto;
       opacity: 0.6;
+    }
+    
+    .search-container {
+      position: relative;
+      max-width: 400px;
+      margin: 1.5rem auto 0;
+      
+      .search-input {
+        width: 100%;
+        padding: 0.8rem 1.5rem;
+        padding-right: 2.5rem;
+        border: 1px solid rgba(74, 53, 32, 0.3);
+        border-radius: 30px;
+        background-color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+        color: #4a3520;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: #4a3520;
+          box-shadow: 0 0 0 2px rgba(74, 53, 32, 0.2);
+        }
+        
+        &::placeholder {
+          color: #8a7b66;
+          font-style: italic;
+        }
+      }
+      
+      .clear-search {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #6c5b40;
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 0.2rem;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          color: #4a3520;
+          transform: translateY(-50%) scale(1.2);
+        }
+      }
     }
   }
 
@@ -312,6 +767,7 @@ const AncientManuscriptContainer = styled.div`
       padding: 0.5rem 1rem;
       transition: all 0.3s ease;
       border-bottom: 1px dashed rgba(74, 53, 32, 0.2);
+      position: relative;
       
       &:hover, &.active {
         border-bottom: 1px dashed rgba(74, 53, 32, 0.8);
@@ -322,6 +778,18 @@ const AncientManuscriptContainer = styled.div`
         
         .day-number, .day-name {
           color: #000;
+        }
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 30px;
+          height: 2px;
+          background-color: #4a3520;
+          border-radius: 2px;
         }
       }
       
@@ -335,7 +803,7 @@ const AncientManuscriptContainer = styled.div`
           border-radius: 50%;
           border: 1px solid #4a3520;
           background-color: transparent;
-          transition: background-color 0.3s ease;
+          transition: all 0.3s ease;
         }
       }
       
@@ -346,11 +814,13 @@ const AncientManuscriptContainer = styled.div`
         .day-number {
           font-weight: 600;
           margin-bottom: 0.2rem;
+          font-size: 1.1rem;
         }
         
         .day-name {
           font-size: 0.9rem;
           opacity: 0.8;
+          font-style: italic;
         }
       }
     }
@@ -398,12 +868,32 @@ const AncientManuscriptContainer = styled.div`
       opacity: 0.4;
       pointer-events: none;
     }
+    
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      color: #6c5b40;
+      
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      p {
+        font-style: italic;
+      }
+    }
   }
 
   .schedule-item {
     display: flex;
     margin-bottom: 2.5rem;
     position: relative;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateX(5px);
+    }
     
     &.highlight {
       .time-block .time {
@@ -459,17 +949,22 @@ const AncientManuscriptContainer = styled.div`
         border-radius: 50%;
         border: 1px solid #4a3520;
         background-color: #e8e0cc;
+        transition: all 0.3s ease;
       }
       
       .time {
         font-size: 0.9rem;
         color: #6c5b40;
         white-space: nowrap;
+        transition: all 0.3s ease;
       }
-    }      .event-block {
+    }
+
+    .event-block {
       flex-grow: 1;
       padding: 1rem 1.5rem;
       position: relative;
+      transition: all 0.3s ease;
       
       &::before {
         content: '';
@@ -485,14 +980,56 @@ const AncientManuscriptContainer = styled.div`
           rgba(74, 53, 32, 0.2) 80%,
           transparent 100%
         );
+        transition: all 0.3s ease;
+      }
+      
+      .event-header {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 0.5rem;
+        position: relative;
+      }
+      
+      .event-icon {
+        margin-right: 0.8rem;
+        font-size: 1.2rem;
+        min-width: 24px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #4a3520;
+        background-color: rgba(255, 250, 240, 0.3);
+        border-radius: 50%;
+        padding: 4px;
+        box-shadow: 0 1px 3px rgba(74, 53, 32, 0.1);
+        border: 1px solid rgba(74, 53, 32, 0.15);
+      }
+      
+      .event-actions {
+        margin-left: auto;
+        display: flex;
+        gap: 0.8rem;
+      }
+      
+      .expand-icon, .bookmark-icon {
+        font-size: 0.9rem;
+        color: #6c5b40;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
       }
       
       .event-title {
         font-size: 1.2rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0;
         color: #4a3520;
         font-weight: 600;
         letter-spacing: 0.3px;
+        transition: all 0.3s ease;
+        flex-grow: 1;
       }
       
       .event-location {
@@ -508,6 +1045,7 @@ const AncientManuscriptContainer = styled.div`
         color: #4a3520;
         white-space: pre-line;
         margin-bottom: 0;
+        overflow: hidden;
       }
       
       .highlight-marker {
@@ -517,6 +1055,116 @@ const AncientManuscriptContainer = styled.div`
         width: 15px;
         height: 15px;
       }
+      
+      .timeline-visual {
+        margin-top: 1rem;
+        padding: 1rem;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+        border: 1px dashed rgba(74, 53, 32, 0.2);
+        
+        .timeline-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.5rem;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+          
+          .timeline-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid #4a3520;
+            margin-right: 1rem;
+            position: relative;
+            
+            &::after {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 6px;
+              height: 6px;
+              border-radius: 50%;
+              background-color: #4a3520;
+              opacity: 0;
+              transition: all 0.3s ease;
+            }
+            
+            &.completed::after {
+              opacity: 1;
+            }
+          }
+          
+          .timeline-date {
+            min-width: 60px;
+            font-weight: bold;
+            color: #5d3a17;
+          }
+          
+          .timeline-event {
+            color: #4a3520;
+          }
+        }
+      }
+      
+      .sub-items-container {
+        margin-top: 1rem;
+        padding-left: 1rem;
+        border-left: 2px solid rgba(74, 53, 32, 0.1);
+        overflow: hidden;
+        
+        .sub-item {
+          margin-bottom: 1rem;
+          padding: 1rem;
+          background-color: rgba(255, 255, 255, 0.3);
+          border-radius: 5px;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+          
+          .sub-item-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+          }
+          
+          .sub-item-icon {
+            margin-right: 0.8rem;
+            font-size: 1rem;
+            min-width: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a3520;
+            background-color: rgba(255, 250, 240, 0.3);
+            border-radius: 50%;
+            padding: 3px;
+            box-shadow: 0 1px 2px rgba(74, 53, 32, 0.1);
+            border: 1px solid rgba(74, 53, 32, 0.15);
+          }
+          
+          .sub-item-title {
+            font-size: 1rem;
+            color: #5d3a17;
+            margin-bottom: 0;
+            font-weight: 600;
+          }
+          
+          .sub-item-description {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #4a3520;
+            white-space: pre-line;
+            padding-left: 1.5rem;
+          }
+        }
+      }
     }
   }
 
@@ -525,6 +1173,7 @@ const AncientManuscriptContainer = styled.div`
     padding-top: 2rem;
     position: relative;
     z-index: 2;
+    text-align: center;
     
     .decoration-line {
       width: 100%;
@@ -549,15 +1198,24 @@ const AncientManuscriptContainer = styled.div`
     .navigation-links {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
       
       .manuscript-link {
-        margin: 0 1.5rem;
+        margin: 0 0.5rem;
         color: #4a3520;
         text-decoration: none;
         position: relative;
+        padding: 0.5rem 1rem;
+        border: 1px solid rgba(74, 53, 32, 0.2);
+        border-radius: 20px;
+        transition: all 0.3s ease;
         
         &:hover {
-          text-decoration: underline;
+          background-color: rgba(74, 53, 32, 0.1);
+          text-decoration: none;
+          transform: translateY(-2px);
           
           .link-decoration {
             transform: rotate(90deg);
@@ -571,11 +1229,45 @@ const AncientManuscriptContainer = styled.div`
         }
       }
     }
+    
+    .footer-seal {
+      margin-top: 2rem;
+      display: inline-block;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      
+      svg {
+        width: 80px;
+        height: 80px;
+      }
+    }
   }
 
   @media (max-width: 768px) {
     .manuscript-page {
       padding: 2rem 1.5rem;
+    }
+    
+    .manuscript-header {
+      padding: 0;
+      
+      .vedic-title {
+        font-size: 2rem;
+      }
+      
+      .decorative-corner {
+        display: none;
+      }
+      
+      .search-container {
+        max-width: 100%;
+        padding: 0 1rem;
+      }
     }
     
     .manuscript-navigation {
@@ -597,18 +1289,30 @@ const AncientManuscriptContainer = styled.div`
       .time-block {
         width: 100%;
         margin-bottom: 0.8rem;
+        padding-right: 0;
+        display: flex;
+        align-items: center;
         
         .time-marker {
-          display: none;
+          position: static;
+          margin-right: 0.5rem;
         }
       }
       
       .event-block {
         padding-top: 0;
+        padding-left: 0;
         
         &::before {
           display: none;
         }
+      }
+    }
+    
+    .manuscript-footer {
+      .navigation-links {
+        flex-direction: column;
+        align-items: center;
       }
     }
   }
@@ -617,7 +1321,17 @@ const AncientManuscriptContainer = styled.div`
     .manuscript-header .vedic-title {
       font-size: 1.8rem;
     }
+    
+    .schedule-item {
+      &.highlight .event-block .event-title {
+        font-size: 1.1rem;
+      }
+      
+      &.section-header .event-block .event-title {
+        font-size: 1.3rem;
+      }
+    }
   }
 `;
 
-export default Schedule;
+export default Schedule;
