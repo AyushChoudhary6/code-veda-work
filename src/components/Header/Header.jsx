@@ -12,7 +12,7 @@ const Header = () => {
     { path: '/', name: 'Home' },
     { path: '/why-code-veda', name: 'Why Code Veda' },
     { path: '/schedule', name: 'Schedule' },
-    { path: '/events', name: 'Events' },
+    // { path: '/events', name: 'Events' },
     { path: '/prizes', name: 'Prizes' },
     { path: '/sponsors', name: 'Sponsors' },
     { path: '/team', name: 'Team' },

@@ -10,235 +10,105 @@ const Schedule = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // We're only keeping Day 1 as requested
   const scheduleData = {
     1: [
       {
-        time: "08:00 - 09:30",
-        title: "Registration & Welcome Tea",
-        location: "Main Entrance Hall",
-        description: "Participants arrive, collect their welcome kits, and enjoy herbal tea blends based on ancient Ayurvedic recipes.",
-        highlight: false
+        title: "Introduction",
+        highlight: true,
+        description: `Welcome to Code Veda, a unique hackathon themed "Digital Dharma" where innovation meets intention. Inspired by timeless Vedic values, Code Veda champions ethical and purposeful coding that aligns with truth (Satya), duty (Dharma), and selfless service (Seva). This is more than just a tech event, it's a call to create solutions that not only solve problems but also uphold principles that guide a responsible and compassionate digital future. Join us as we code with conscience and build with purpose.`
       },
       {
-        time: "09:30 - 10:30",
-        title: "Opening Ceremony",
-        location: "Brahmā Auditorium",
-        description: "Traditional lamp lighting (dīpa pradīpana), welcome address, and keynote speech on 'The Confluence of Ancient Wisdom and Modern Innovation'.",
-        highlight: true
+        title: "Overview",
+        highlight: true,
+        description: `• Team Size: 2–4 Members 
+        • Eligibility: Open to all Tech Enthusiast Students 
+        • Mode: Hybrid (Online and Offline)
+        • Final Round Venue: Masters' Union`
       },
       {
-        time: "10:30 - 11:30",
-        title: "Hackathon Theme Unveiling",
-        location: "Brahmā Auditorium",
-        description: "Presentation of this year's themes, challenges, evaluation criteria, and prizes.",
-        highlight: false
+        title: "Timeline",
+        highlight: true,
+        description: `➤ 20 August - Registration closes
+➤ 15 July–25 August - PPT submission
+➤ 1 September - PPT round result
+➤ 7 September - Online Round
+➤ 8 September - Online round result (Tentative)
+➤ 16–17 September - Offline round`
       },
       {
-        time: "11:30 - 12:30",
-        title: "Team Formation & Networking",
-        location: "Sarasvatī Hall",
-        description: "Interactive session for participants to form teams or find team members based on skills and interests.",
-        highlight: false
+        title: "Code Of Conduct",
+        highlight: true,
+        description: `As part of our commitment to fostering a safe, respectful, and inclusive environment during the hackathon, we kindly remind you to immediately report any inappropriate behavior to the organizing team.
+
+**Consequences of Inappropriate Behavior:**
+• Verbal Warning (for minor infractions)
+• Immediate Disqualification from the hackathon
+• Removal from the event venue
+• Permanent ban from future events`
       },
       {
-        time: "12:30 - 14:00",
-        title: "Satvic Lunch Break",
-        location: "Dining Pavilion",
-        description: "Mindful eating with a specially curated vegetarian lunch based on Ayurvedic principles.",
-        highlight: false
+        title: "Tracks",
+        highlight: true,
+        description: `• Code For Karma • Open Innovation • Healthcare • IoT • AR/VR • Sustainable Development • App Development`
       },
       {
-        time: "14:00 - 15:30",
-        title: "Workshop: 'Vedic Mathematics in Algorithm Optimization'",
-        location: "Gaṇeśa Workshop Room 1",
-        description: "Learn how ancient mathematical techniques can improve algorithm efficiency and performance.",
-        highlight: false
+        title: "Phase Details",
+        highlight: true,
+        isHeader: true,
+        description: ``
       },
       {
-        time: "15:30 - 17:00",
-        title: "Workshop: 'Sanskrit-Inspired Design Patterns'",
-        location: "Gaṇeśa Workshop Room 2",
-        description: "Explore how Sanskrit grammar principles can inform modern software architecture and design patterns.",
-        highlight: false
+        title: "Phase 1: Registrations",
+        highlight: true,
+        description: `➤ Registrations will be open till 20th August 2025
+➤ All participants are expected to form teams of 2-4 members
+➤ No changes will be allowed in team structure after registration closes`
       },
       {
-        time: "17:00 - 17:30",
-        title: "Evening Tea Break",
-        location: "Garden Courtyard",
-        description: "Refreshments and networking opportunity.",
-        highlight: false
+        title: "Phase 2: PPT Submission",
+        highlight: true,
+        description: `➤ PPT submission starts on 15th July 2025
+➤ Deadline for PPT submission is 25th August 2025
+➤ Project description should be added alongside the PPT`
       },
       {
-        time: "17:30 - 19:00",
-        title: "Hackathon Begins: Ideation Phase",
-        location: "Various Hacking Zones",
-        description: "Teams start brainstorming, conceptualizing their solutions, and creating project plans.",
-        highlight: true
+        title: "Phase 3: Online Round",
+        highlight: true,
+        description: `➤ Online round will be conducted on 7th September 2025
+➤ Shortlisted teams from the PPT round will move to the online round
+➤ Results of this round will be declared next day, i.e. on 8th September 2025`
       },
       {
-        time: "19:00 - 20:30",
-        title: "Dinner & Cultural Program",
-        location: "Dining Pavilion & Outdoor Stage",
-        description: "Enjoy a traditional Indian dinner while witnessing classical dance and music performances.",
-        highlight: false
+        title: "Requirements",
+        highlight: true,
+        description: `• Github Repository
+• Idea Presentation`
       },
       {
-        time: "20:30 - onwards",
-        title: "Continued Hacking (Optional)",
-        location: "Various Hacking Zones",
-        description: "Teams can continue working on their projects or retire for the day.",
-        highlight: false
-      }
-    ],
-    2: [
-      {
-        time: "07:00 - 08:00",
-        title: "Morning Yoga Session",
-        location: "Garden Courtyard",
-        description: "Optional yoga and meditation session to enhance focus and creativity.",
-        highlight: false
+        title: "Rules",
+        highlight: true,
+        description: `• Presentation should clearly outline approach and scope
+• Allowed Tools: Any open-source framework and libraries`
       },
       {
-        time: "08:00 - 09:00",
-        title: "Breakfast",
-        location: "Dining Pavilion",
-        description: "Energizing breakfast to fuel the day's creative work.",
-        highlight: false
+        title: "Phase 4: Offline Round",
+        highlight: true,
+        description: `➤ Offline round will be conducted on 16th-17th September 2025 at Masters' Union
+➤ It will be a 24 hours high energy hackathon`
       },
       {
-        time: "09:00 - 12:30",
-        title: "Intensive Hacking Session",
-        location: "Various Hacking Zones",
-        description: "Teams work on developing their prototypes with mentor support available.",
-        highlight: true
-      },
-      {
-        time: "10:30 - 11:00",
-        title: "Mini-Break: Ayurvedic Refreshments",
-        location: "Hacking Zones",
-        description: "Quick refreshments served to the teams at their workstations.",
-        highlight: false
-      },
-      {
-        time: "12:30 - 13:30",
-        title: "Lunch Break",
-        location: "Dining Pavilion",
-        description: "Nutritious lunch designed to maintain energy and focus.",
-        highlight: false
-      },
-      {
-        time: "13:30 - 14:30",
-        title: "Tech Talk: 'AI Ethics: Vedic Perspectives'",
-        location: "Brahmā Auditorium",
-        description: "Panel discussion on how ancient ethical frameworks can inform modern AI development.",
-        highlight: false
-      },
-      {
-        time: "14:30 - 18:00",
-        title: "Continued Hacking",
-        location: "Various Hacking Zones",
-        description: "Teams return to development with periodic mentor check-ins.",
-        highlight: false
-      },
-      {
-        time: "16:00 - 16:30",
-        title: "Afternoon Tea",
-        location: "Hacking Zones",
-        description: "Traditional Indian chai and snacks served to teams.",
-        highlight: false
-      },
-      {
-        time: "18:00 - 19:00",
-        title: "Progress Update Session",
-        location: "Sarasvatī Hall",
-        description: "Each team gives a 2-minute update on their progress, challenges, and next steps.",
-        highlight: true
-      },
-      {
-        time: "19:00 - 20:00",
-        title: "Dinner",
-        location: "Dining Pavilion",
-        description: "Relaxed dinner with opportunity to network with mentors and sponsors.",
-        highlight: false
-      },
-      {
-        time: "20:00 - onwards",
-        title: "Night Hacking Session",
-        location: "Various Hacking Zones",
-        description: "Teams continue working on their projects with 24/7 access to the venue.",
-        highlight: false
-      }
-    ],
-    3: [
-      {
-        time: "07:00 - 08:00",
-        title: "Sunrise Meditation",
-        location: "Garden Courtyard",
-        description: "Optional meditation session to prepare mentally for the final day.",
-        highlight: false
-      },
-      {
-        time: "08:00 - 09:00",
-        title: "Breakfast",
-        location: "Dining Pavilion",
-        description: "Final day breakfast to energize teams for the last push.",
-        highlight: false
-      },
-      {
-        time: "09:00 - 12:00",
-        title: "Final Development Sprint",
-        location: "Various Hacking Zones",
-        description: "Last hours of development before the submission deadline.",
-        highlight: true
-      },
-      {
-        time: "12:00",
-        title: "Code Freeze & Submission Deadline",
-        location: "Online Platform",
-        description: "All projects must be submitted through the hackathon platform.",
-        highlight: true
-      },
-      {
-        time: "12:00 - 13:00",
-        title: "Lunch Break",
-        location: "Dining Pavilion",
-        description: "Relaxed lunch as teams prepare their presentations.",
-        highlight: false
-      },
-      {
-        time: "13:00 - 15:30",
-        title: "Preparation Time",
-        location: "Practice Rooms",
-        description: "Teams prepare and practice their final presentations.",
-        highlight: false
-      },
-      {
-        time: "15:30 - 18:00",
-        title: "Project Presentations",
-        location: "Brahmā Auditorium",
-        description: "Each team presents their solution to the judges and audience (5 minutes presentation + 3 minutes Q&A).",
-        highlight: true
-      },
-      {
-        time: "18:00 - 19:00",
-        title: "Judges Deliberation",
-        location: "Private Judges' Chamber",
-        description: "Judges evaluate all projects based on the established criteria.",
-        highlight: false
-      },
-      {
-        time: "19:00 - 20:30",
-        title: "Awards Ceremony & Closing",
-        location: "Brahmā Auditorium",
-        description: "Announcement of winners, prize distribution, and closing remarks.",
-        highlight: true
-      },
-      {
-        time: "20:30 - 22:00",
-        title: "Celebration Dinner",
-        location: "Garden Courtyard",
-        description: "Gala dinner to celebrate the achievements of all participants.",
-        highlight: false
+        title: "Schedule",
+        highlight: true,
+        time: "16-17 Sep 2025",
+        description: `• Opening Ceremony: 11a.m. -12 p.m. - Angaar Batch Session
+• PW session
+• Lunch Break
+• Project Development, mentoring and evaluation
+• Judging Session
+• Results
+• Prize Distribution
+• Closing`
       }
     ]
   };
@@ -268,32 +138,23 @@ const Schedule = () => {
         </header>
 
         <div className="manuscript-navigation">
-          {[1, 2, 3].map(day => (
-            <div 
-              key={day} 
-              className={`day-selector ${activeDay === day ? 'active' : ''}`} 
-              onClick={() => setActiveDay(day)}
-            >
-              <div className="day-indicator">
-                <span className="day-circle"></span>
-              </div>
-              <div className="day-text">
-                <span className="day-number">दिवस {day}</span>
-                <span className="day-name">
-                  {day === 1 ? 'सृष्टि (Creation)' : 
-                   day === 2 ? 'स्थिति (Development)' : 
-                   'समाप्ति (Completion)'}
-                </span>
-              </div>
+          <div className="day-selector active">
+            <div className="day-indicator">
+              <span className="day-circle"></span>
             </div>
-          ))}
+            <div className="day-text">
+              <span className="day-number">दिवस 1</span>
+              <span className="day-name">सृष्टि (Creation)</span>
+            </div>
+          </div>
         </div>
+        
 
         <div className="manuscript-content">
-          {scheduleData[activeDay].map((item, index) => (
+          {scheduleData[1].map((item, index) => (
             <motion.div
               key={index}
-              className={`schedule-item ${item.highlight ? 'highlight' : ''}`}
+              className={`schedule-item ${item.highlight ? 'highlight' : ''} ${item.isHeader ? 'section-header' : ''}`}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.03, duration: 0.5 }}
@@ -305,11 +166,15 @@ const Schedule = () => {
               
               <div className="event-block">
                 <h3 className="event-title">{item.title}</h3>
-                <div className="event-location">
-                  {item.location}
-                </div>
-                <p className="event-description">{item.description}</p>
-                {item.highlight && (
+                {item.location && (
+                  <div className="event-location">
+                    {item.location}
+                  </div>
+                )}
+                {!item.isHeader && (
+                  <div className="event-description">{item.description}</div>
+                )}
+                {item.highlight && !item.isHeader && (
                   <div className="highlight-marker">
                     <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <circle cx="10" cy="10" r="5" fill="#4a3520" opacity="0.5" />
@@ -549,10 +414,32 @@ const AncientManuscriptContainer = styled.div`
       .event-block {
         .event-title {
           color: #5d3a17;
+          font-weight: 700;
+          font-size: 1.3rem;
+          border-bottom: 1px solid rgba(93, 58, 23, 0.2);
+          padding-bottom: 0.5rem;
+          margin-bottom: 1rem;
         }
         
         &::before {
           border-color: rgba(93, 58, 23, 0.4);
+        }
+      }
+    }
+    
+    &.section-header {
+      margin-top: 2.5rem;
+      margin-bottom: 0.5rem;
+      
+      .event-block {
+        .event-title {
+          color: #422600;
+          font-size: 1.5rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          border-bottom: 2px solid rgba(93, 58, 23, 0.4);
+          padding-bottom: 0.5rem;
         }
       }
     }
@@ -579,9 +466,7 @@ const AncientManuscriptContainer = styled.div`
         color: #6c5b40;
         white-space: nowrap;
       }
-    }
-    
-    .event-block {
+    }      .event-block {
       flex-grow: 1;
       padding: 1rem 1.5rem;
       position: relative;
@@ -607,6 +492,7 @@ const AncientManuscriptContainer = styled.div`
         margin-bottom: 0.5rem;
         color: #4a3520;
         font-weight: 600;
+        letter-spacing: 0.3px;
       }
       
       .event-location {
@@ -618,8 +504,10 @@ const AncientManuscriptContainer = styled.div`
       
       .event-description {
         font-size: 0.95rem;
-        line-height: 1.5;
+        line-height: 1.8;
         color: #4a3520;
+        white-space: pre-line;
+        margin-bottom: 0;
       }
       
       .highlight-marker {

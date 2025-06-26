@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import styled from 'styled-components';
 
 
 
@@ -9,6 +10,24 @@ import { useInView } from "react-intersection-observer";
 //            Code by Mohit Aggarwal
 // ===================================
 
+
+// Styled component for event description formatting
+const StyledEventPage = styled.div`
+  .event-description {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #4a3520;
+    white-space: pre-line;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .event-description {
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+  }
+`;
 
 const Event = () => {
   const controls = useAnimation();
@@ -27,33 +46,63 @@ const Event = () => {
     {
       time: "08:00",
       title: "Registration & Breakfast",
-      icon: "☕",
+      description: "➤ Check-in and registration for all participants\n➤ Complimentary breakfast provided\n➤ Pick up your participant kits",
       phase: "Preparation",
     },
-    { time: "09:00", title: "Opening Ceremony", icon: "🕉️", phase: "Kickoff" },
-    { time: "09:30", title: "Team Formation", icon: "👥", phase: "Teamwork" },
-    { time: "10:00", title: "Hackathon Begins!", icon: "💻", phase: "Coding" },
+    { 
+      time: "09:00", 
+      title: "Opening Ceremony", 
+      description: "➤ Welcome address by organizers\n➤ Introduction to the hackathon theme and rules\n➤ Special keynote on Digital Dharma", 
+      phase: "Kickoff" 
+    },
+    { 
+      time: "09:30", 
+      title: "Team Formation", 
+      description: "➤ Networking session for solo participants\n➤ Final team registrations\n➤ Mentor introductions", 
+      phase: "Teamwork" 
+    },
+    { 
+      time: "10:00", 
+      title: "Hackathon Begins!", 
+      description: "➤ Official start of the coding period\n➤ Track selection finalization\n➤ Initial mentor check-ins", 
+      phase: "Coding" 
+    },
     {
       time: "06:00",
       title: "Sunrise Meditation",
-      icon: "🌄",
+      description: "➤ Optional guided meditation session\n➤ Rejuvenate your mind and body\n➤ Light refreshments provided",
       phase: "Recharge",
     },
-    { time: "07:00", title: "Final Coding Push", icon: "⚡", phase: "Coding" },
+    { 
+      time: "07:00", 
+      title: "Final Coding Push", 
+      description: "➤ Last sprint before submission deadline\n➤ Technical assistance available\n➤ Project refinement", 
+      phase: "Coding" 
+    },
     {
       time: "08:00",
       title: "Project Submission",
-      icon: "⏰",
+      description: "➤ Final code submission deadline\n➤ Project documentation submission\n➤ Preparation for presentations",
       phase: "Deadline",
     },
-    { time: "09:00", title: "Presentations", icon: "🎤", phase: "Showcase" },
+    { 
+      time: "09:00", 
+      title: "Presentations", 
+      description: "➤ Each team presents their solution\n➤ 5 minutes per team + Q&A\n➤ Evaluation begins", 
+      phase: "Showcase" 
+    },
     {
       time: "10:30",
       title: "Judging & Deliberation",
-      icon: "🧑‍⚖️",
+      description: "➤ Panel evaluation of all projects\n➤ Scoring based on innovation, implementation and impact\n➤ Final decision making",
       phase: "Evaluation",
     },
-    { time: "11:00", title: "Closing Ceremony", icon: "🏆", phase: "Awards" },
+    { 
+      time: "11:00", 
+      title: "Closing Ceremony", 
+      description: "➤ Announcement of winners\n➤ Prize distribution\n➤ Closing remarks and next steps", 
+      phase: "Awards" 
+    },
   ];
 
   // Phase colors
@@ -82,7 +131,7 @@ const Event = () => {
 
       // Create floating elements
       const elements = [];
-      const elementTypes = ["🕉️", "💻", "🧘", "⚡", "🌙", "🌟", "📱", "🔮"];
+      const elementTypes = ["➤", "•", "॥", "ॐ", "✧", "✦", "❉", "⁂"];
 
       for (let i = 0; i < 15; i++) {
         elements.push({
@@ -207,7 +256,7 @@ const Event = () => {
   };
 
   return (
-    <div
+    <StyledEventPage
       ref={ref}
       className="relative min-h-screen overflow-hidden"
       style={{ backgroundColor: baseColor, color: textColor }}
@@ -397,7 +446,7 @@ const Event = () => {
                           >
                             {item.icon}
                           </div>
-                          <div>
+                          <div className="w-full">
                             <div className="flex items-center mb-1">
                               <div
                                 className="font-mono font-bold mr-3"
@@ -409,7 +458,12 @@ const Event = () => {
                                 {item.phase}
                               </div>
                             </div>
-                            <h3 className="text-xl font-bold">{item.title}</h3>
+                            <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                            {item.description && (
+                              <div className="mt-2 text-sm whitespace-pre-line event-description">
+                                {item.description}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -505,13 +559,23 @@ const Event = () => {
                             </div>
                           </motion.div>
                           <motion.h3
-                            className="text-base font-bold"
+                            className="text-base font-bold mb-2"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: i * 0.2 + 0.3 }}
                           >
                             {item.title}
                           </motion.h3>
+                          {item.description && (
+                            <motion.div 
+                              className="mt-1 text-xs whitespace-pre-line event-description"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: i * 0.2 + 0.4 }}
+                            >
+                              {item.description}
+                            </motion.div>
+                          )}
                         </div>
                       </div>
                     </motion.div>
@@ -535,7 +599,7 @@ const Event = () => {
           </motion.div>
         </section>
       </div>
-    </div>
+    </StyledEventPage>
   );
 };
 

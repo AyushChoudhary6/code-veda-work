@@ -29,7 +29,7 @@ import LoadingPage from './components/LoadingPage/LoadingPage';
 import Home from './pages/Home';
 import WhyCodeVeda from './pages/WhyCodeVeda';
 import Schedule from './pages/Schedule';
-import Events from './pages/Events';
+// import Events from './pages/Events';
 import Prizes from './pages/Prizes';
 import Sponsors from './pages/Sponsors';
 import Team from './pages/Team';
@@ -130,14 +130,14 @@ function App() {
                   />
                 } 
               />
-              <Route 
+              {/* <Route 
                 path="/events" 
                 element={
                   <HomeWrapper 
                     hasEntered={hasEntered} 
                     setHasEntered={setHasEntered} 
                     HomeComponent={Events}
-                  />
+                  /> */}
                 } 
               />
               <Route 
